@@ -1,10 +1,6 @@
 ---
 name: prep
-description: Step 1 (Preparation) of the team's 8-step AI collaboration framework.
-Takes a user story (free text or a ClickUp task ID/URL) and runs two grilling sessions
-in order — prep-grill-task, then prep-grill-context — producing
-`.ai/tasks/<task_name>/01-brief-and-context.md`. Use only when the developer
-explicitly invokes `prep`.
+description: Step 1 (Preparation) of the team's 8-step AI collaboration framework. Takes a user story (free text or a ClickUp task ID/URL) and runs two grilling sessions in order — prep-grill-task, then prep-grill-context — producing `.ai/tasks/<task_name>/01-brief-and-context.md`.
 disable-model-invocation: true
 ---
 
@@ -26,14 +22,13 @@ The developer's invoking message contains the task: either a free-text user stor
 
 1. **Resolve the input** as described above.
 2. **Check for an existing file** at `.ai/tasks/*/01-brief-and-context.md` matching this task (same ClickUp ID or same slug). If one exists, this is a re-run: read it, and treat every entry in its Decision Log as a settled branch. Only grill what is missing or what the developer says has changed.
-3. **Run `prep-grill-task`** with the resolved story. It proposes the `<task_name>`, creates the file, and writes the Task Brief once the developer confirms it.
-4. **Run `prep-grill-context`** on the same task. It writes the Context section once the developer confirms it.
+3. **Read and execute `GRILL-BRIEF.md`** with the resolved story. It proposes the `<task_name>`, creates the file, and writes the Task Brief once the developer confirms it.
+4. **Read and execute `GRILL-CONTEXT.md`** on the same task. It writes the Context section once the developer confirms it.
 5. **Finish**: tell the developer the file's path and that Preparation is complete, and say that the next step is Analysis & Design.
 
-Do not start step 4 until step 3's session is confirmed. Do not declare Preparation complete until both sessions are confirmed.
+Each step is blocked from execution until the one before it has run to completion.
+Do not declare Preparation complete until both sessions are confirmed.
 
 ## Output
 
-A single file: `.ai/tasks/<task_name>/01-brief-and-context.md`, written incrementally by the two sub-skills. Its template is defined in `prep-grill-task`.
-
-Write the file's contents in the language the developer is using.
+A single file: `.ai/tasks/<task_name>/01-brief-and-context.md`, written incrementally by the two sub-skills.
