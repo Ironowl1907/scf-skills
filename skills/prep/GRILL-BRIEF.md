@@ -1,8 +1,3 @@
----
-name: prep-grill-task
-description: First grilling session of Preparation (step 1 of the team's AI collaboration framework). Interviews the developer relentlessly about a single task until there is a shared, unambiguous understanding of it, then writes the Task Brief of `.ai/tasks/<task_name>/01-brief-and-context.md`. Invoked by `prep`, or directly by the developer to re-run the task-understanding session.
----
-
 # Prep: Grill the Task
 
 Reach a **shared understanding of the task** with the developer, with nothing left ambiguous, then write the Task Brief.

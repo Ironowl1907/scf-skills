@@ -1,8 +1,3 @@
----
-name: prep-grill-context
-description: Second grilling session of the Preparation step (step 1 of the team's AI collaboration framework). Starting from a confirmed Task Brief, it explores the codebase and grills the developer until all the context and reference material the task needs has been compiled, then writes the Context section of `.ai/tasks/<task_name>/01-brief-and-context.md`. Invoked by the `prep` skill, or directly by the developer to re-run context gathering.
----
-
 # Prep: Grill the Context
 
 Compile **all the context and reference material** needed for the task described in the confirmed Task Brief, then write the Context section.
