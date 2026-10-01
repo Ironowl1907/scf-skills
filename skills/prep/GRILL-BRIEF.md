@@ -52,30 +52,3 @@ Then summarize the brief and ask the developer to confirm it. Do not write anyth
 
 Once the developer confirms, create `.ai/tasks/<task_name>/01-brief-and-context.md` from the template below, if it doesn't already exist. Fill in the Task Brief and append this session's decisions to the Decision Log. On a re-run, update the brief in place and append new decisions instead of rewriting the log. Leave the Context section untouched. Write the file's contents in the developer's language.
 
-```markdown
-# <task_name>
-
-Source: <ClickUp link, or "free text"> · Status: brief ✅ / context ⏳
-
-## 1. Task Brief
-
-### Problem Statement
-<The problem, from the user's perspective.>
-
-### Expected Outcome
-<What "done" looks like, from the user's perspective.>
-
-### Acceptance Criteria
-1. <Verifiable criterion>
-
-### Out of Scope
-- <Item>
-
-## 2. Context
-
-<!-- Written by prep-grill-context -->
-
-## 3. Decision Log
-
-- **Q1** — <question title>: <decision>
-```

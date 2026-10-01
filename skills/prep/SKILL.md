@@ -1,6 +1,6 @@
 ---
 name: prep
-description: Step 1 (Preparation) of the team's 8-step AI collaboration framework. Takes a user story (free text or a ClickUp task ID/URL) and runs two grilling sessions in order — prep-grill-task, then prep-grill-context — producing `.ai/tasks/<task_name>/01-brief-and-context.md`.
+description: Step 1 (Preparation) of the team's 8-step AI collaboration framework. Takes a task and runs two grilling sessions in order — prep-grill-task, then prep-grill-context — producing `.ai/tasks/<task_name>/01-brief-and-context.md`.
 disable-model-invocation: true
 ---
 
@@ -13,10 +13,10 @@ propose designs, implementations, or tests; those belong to later steps.
 
 ## Input
 
-The developer's invoking message contains the task: either a free-text user story, or a ClickUp task ID/URL.
+The developer's invoking message contains the task: a free-text user story, and/or a ClickUp task ID/URL.
 
 - **ClickUp ID/URL**: if a ClickUp tool is available, fetch the task (title, description, acceptance criteria, comments, linked tasks, attachments). If no ClickUp tool is available, say which tool is missing, ask the developer to paste the story, and continue from the pasted text. Never guess a ticket's contents.
-- **Free text**: use it as-is.
+- **Free text**: a document or paragraph/s. Use as-is.
 
 ## Process
 
