@@ -21,7 +21,6 @@ Follow the grilling protocol, seeding the tree with these branches and expanding
 3. **Related work**: tickets, PRs, and branches that overlap with or affect this task (including linked ClickUp tasks, if a ClickUp tool is available).
 4. **External references**: third-party docs, APIs, and specs.
 5. **Constraints**: technical, security, performance, and deadline constraints.
-6. **People to consult**: owners, reviewers, and domain experts.
 
 Record facts and pointers, not designs. If a question drifts toward *how* to implement the task, note that it belongs to later steps and move on.
 

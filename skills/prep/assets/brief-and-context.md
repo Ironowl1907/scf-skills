@@ -33,9 +33,6 @@ Source: <ClickUp link, or "free text"> · Status: Pending/Context Pending/Comple
 ### Constraints
 - <Constraint>
 
-### People to Consult
-- <Person or role> — <about what>
-
 ## 3. Decision Log
 
 - **Q1** — <question title>: <decision>
