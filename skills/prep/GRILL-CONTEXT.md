@@ -12,7 +12,7 @@ Treat every entry already in the Decision Log as a settled branch.
 
 **Discover first, then confirm.** Starting from the brief's problem, outcome, and acceptance criteria, search the repository, its docs, and its git history yourself. State what you find to the developer as relevance questions ("I found X; is it relevant, and why?"), with your recommendation for each. Don't ask the developer to point you to things you can find yourself.
 
-**Ask directly only about what can't be discovered:** tacit constraints, external specs and APIs, deadlines, people who own or know the area, and prior art that exists only in someone's head.
+**Ask directly only about what can't be discovered:** tacit constraints, external specs and APIs, deadlines, and prior art that exists only in someone's head.
 
 Follow the grilling protocol, seeding the tree with these branches and expanding each one until they are all fully settled:
 
