@@ -25,7 +25,7 @@ An obligation is a statement of **what must hold** once the task is done, derive
 3. **Traceable**: it cites the impact or impacts it comes from.
 4. **Decidable**: an observer can tell unambiguously whether it holds.
 
-A conditional impact produces a conditional obligation: "If <Step 3 choice>, then <what must hold>."
+A conditional impact produces a conditional obligation: "If <Step 3 choice>, then <what must hold>." In the dossier, the condition goes in the obligation's **Applies** field and what must hold goes in its **Requirements**.
 
 ## Grilling session
 
