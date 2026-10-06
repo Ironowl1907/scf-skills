@@ -1,24 +1,15 @@
 ---
 name: analysis
-description: Step 2 (Analysis & Design) of the team's 8-step AI collaboration framework. Consumes the confirmed task dossier produced by Step 1 (prep), red-teams every impact that fulfilling the task would have on the rest of the system, and settles with the developer what must be done about each impact and why, producing an analysis dossier for Step 3. Must only be invoked manually by the user.
+description: Step 2 (Analysis & Design) of the team's 8-step AI collaboration framework. Takes in the task dossier produced by Step 1 (prep), red-teams every impact that fulfilling the task would have on the rest of the system, and interviews the developer on what must be done about each impact and why, producing an analysis dossier for Step 3. Must only be invoked manually by the user.
 metadata:
   disable-model-invocation: "true"
 ---
 
 # Analysis
 
-Determine **what fulfilling one task does to the system around it**, and settle with the developer **what must be done about it, and why**. You play Red Team: assume nothing is safe until you have checked it, and look for every contract, consumer, dependency, data guarantee, and security or performance property the task can break or strain.
+Determine what fulfilling one task **does to the system around it**, and settle with the developer **what must be done about it, and why**. Analysis finds the **problems** that need fixing, never **how** to fix them. If it can be verified from outside the component, it's within scope.
 
-## Scope rule
-
-Analysis owns the *what* and the *why* at the system level. The *how* belongs to Step 3 (Implementation Proposal).
-
-**Rule of thumb: if it can be verified from outside the component, it is in scope.**
-
-- In scope: API and event contracts, observable behavior, data guarantees, security properties, performance budgets, compatibility during rollout, and which parts of the system must take on new or changed responsibilities (e.g. "the backend must now validate X", "a new frontend component is needed to show Y").
-- Out of scope: internal structure, algorithms, class or function design, library choices, file-by-file edit plans, and test design.
-
-If a finding drifts into *how*, restate it as the externally verifiable requirement behind it. If no such requirement exists, it belongs to Step 3: drop it.
+You play Red Team: assume nothing is safe until you have checked it, and look for every contract, consumer, dependency, data guarantee, and security or performance property the task can break or strain.
 
 ## References
 
@@ -27,8 +18,8 @@ If a finding drifts into *how*, restate it as the externally verifiable requirem
 - [Impact Lenses](references/impact-lenses.md)
 - [Grilling Protocol](references/grilling.md)
 - [Dossier Template](assets/analysis.md)
-- Input File: `.ai/tasks/<task_name>/01-brief-and-context.md`
-- Output File: `.ai/tasks/<task_name>/02-analysis.md`
+- Input File Directory: `.ai/tasks/<task_name>/01-brief-and-context.md`
+- Output File Directory: `.ai/tasks/<task_name>/02-analysis.md`
 
 ## Input
 
@@ -41,7 +32,7 @@ The developer's invoking message identifies the task by `<task_name>`, by ClickU
 ## Process
 
 1. **Resolve and validate the input** as described above.
-2. **Check for an existing output dossier.** If one exists, this is a re-run: read it and treat every entry in its Decision Log as settled. Compare its `Input` line with the input dossier's Decision Log: entries newer than the one recorded mean the brief or context changed since the last run, so re-examine every impact those entries touch. Only grill what is new, changed, or what the developer says has changed.
+2. **Check for an existing output dossier.** If one exists, this is a re-run: read it and treat every entry in its Decision Log as settled. Compare its `Processed questions` line with the input dossier's Decision Log: if it contains more entries than the one recorded, context has changed since the last run, so re-examine every impact those entries touch. Only grill what is new, changed, or what the developer says has changed.
 3. **Read and execute `RED-TEAM.md`.** It produces the candidate impacts. Nothing is written to disk in this step.
 4. **Read and execute `GRILL-IMPACT.md`.** It settles every candidate with the developer and writes the output dossier once they confirm it.
 5. **Finish**: tell the developer the output file's path, that Analysis is complete, and that the next step is Implementation Proposal.
@@ -61,10 +52,10 @@ Distinguish overturns from ordinary work: facts about the codebase are yours to 
 
 When an overturn is found:
 
-1. Finish the current red-team pass if the remaining analysis doesn't depend on the gap, so the developer re-runs `prep` once, not once per gap. If it does depend on it, stop immediately.
+1. Finish the current red-team pass if the remaining analysis doesn't depend on the gap. If it does depend on it, stop immediately.
 2. Do not create or update the output dossier.
 3. Report every gap to the developer, each with: what is missing or contradicted, the evidence, the input dossier section it belongs to (Task Brief, Context, or Decision Log), and the question `prep` needs to settle.
-4. Tell the developer to re-run `prep` for this task with that report, then invoke `analysis` again.
+4. Tell the developer to re-run `prep` for this task with that report, and to only then invoke `analysis` again.
 
 ## Output
 

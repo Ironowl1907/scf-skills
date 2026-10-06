@@ -1,6 +1,7 @@
 # <task_name>
 
 Source: <ClickUp link, or "free text"> · Status: Pending/Impact Pending/Completed
+Processed questions through Q<n>
 
 ## 1. Change Summary
 <In 2–5 sentences: what fulfilling the task introduces, modifies, or removes in the system (behaviors, contracts, data, responsibilities, etc.).>
