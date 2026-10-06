@@ -15,7 +15,7 @@ Processed questions through Q<n>
 - **Lens**: <lens from the impact lenses>
 - **Severity**: <Critical | High | Medium | Low>
 - **Breaking**: <Yes | No>
-- **Condition**: <One-line explanation, or "Unconditional">
+- **Condition**: <one-line explanation, or "Unconditional">
 - **Evidence**: <file paths, references, docs, or history>
 - **Consequence**: <what goes wrong, and for whom, if unaddressed>
 - **Disposition**: <Mitigate via: O<n>[, O<m>] | Accept: <rationale> | Defer: <destination>: <rationale>> (Settled in: Q<n>)
