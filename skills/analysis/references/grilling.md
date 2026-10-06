@@ -16,6 +16,6 @@ Recommendation: <your recommended answer>
 
 Each set of answers reshapes the tree. Recompute the frontier and ask the next round. A question that depends on another question still open in the current round belongs to a *later* round.
 
-**Facts are your job; decisions are the user's.** Never ask the user something you could look up yourself, nevertheless, if considered, ask for clarifications that could mitigate future confusion. If you can dispatch sub-agents, send them to explore in parallel. Otherwise, ask the questions that don't depend on exploration first, and explore while the user answers.
+**Facts are your job; decisions are the user's.** Never ask the user something you could look up yourself. If you can dispatch sub-agents, send them to explore in parallel. Otherwise, ask the questions that don't depend on exploration first, and explore while the user answers.
 
 The session is done only when **every branch of the tree has been resolved, and no open questions remain**.
