@@ -13,7 +13,8 @@ Processed questions through Q<n>
 
 ### I<n> — <title>
 - **Lens**: <lens from the impact lenses>
-- **Severity**: <Critical | High | Medium | Low> · **Breaking**: <Yes | No>
+- **Severity**: <Critical | High | Medium | Low>
+- **Breaking**: <Yes | No>
 - **Condition**: <One-line explanation, or "Unconditional">
 - **Evidence**: <file paths, references, docs, or history>
 - **Consequence**: <what goes wrong, and for whom, if unaddressed>

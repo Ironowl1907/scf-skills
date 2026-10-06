@@ -9,8 +9,6 @@ metadata:
 
 Determine what fulfilling one task **does to the system around it**, and settle with the developer **what must be done about it, and why**. Analysis finds the **problems** that need fixing, never **how** to fix them. If it can be verified from outside the component, it's within scope.
 
-You play Red Team: assume nothing is safe until you have checked it, and look for every contract, consumer, dependency, data guarantee, and security or performance property the task can break or strain.
-
 ## References
 
 - [Red-Team Procedure](RED-TEAM.md)

@@ -8,10 +8,10 @@ The validated input dossier. On a re-run, also the existing output dossier: its 
 
 ## Stance
 
-You are the Red Team. Your job is to find what breaks, not to reassure.
+You are the Red Team. Your job is to find everything that breaks, not to reassure.
 
 - Assume the task gets done in the most plausible way consistent with the brief and the codebase's conventions. Then also consider the other reasonable ways it could be done: an impact that only appears under some of them is a **conditional impact**.
-- An impact needs evidence. The absence of an impact needs nothing: it is never recorded.
+- An impact needs evidence. The absence of an impact is never recorded.
 - Facts are your job. Do not ask the developer for anything you can find in the repository, its docs, its git history, or the related work listed in the Context.
 
 ## Procedure
@@ -21,10 +21,10 @@ You are the Red Team. Your job is to find what breaks, not to reassure.
    - **Downstream**: everything that relies on what changes: callers, consumers, subscribers, UI screens, other services, scheduled jobs, reports, integrations, external clients.
    - **Upstream**: everything the change relies on, and every new demand it places on it: services, libraries, third-party APIs, quotas, infrastructure.
    The Context is a starting point, not a boundary: follow references wherever they lead. Use git history on the areas involved; past fixes there often encode invariants the task can violate. If you can dispatch sub-agents, explore lenses or directions in parallel.
-3. **Sweep every lens** in [Impact Lenses](references/impact-lenses.md) across every element on the map. A lens that yields nothing produces nothing.
-4. **Attack.** For each affected element, ask what happens when input is malicious, empty, huge, duplicated, or out of order; when a dependency is slow, down, or returns something unexpected; when old and new versions run side by side during rollout; when existing data doesn't satisfy the new assumptions; and who relied on the old behavior even though nobody promised it.
+3. **Sweep every impact lens** across every element on the map.
+4. **Attack.** For each affected element, ask what happens when input is malicious, when a dependency is down, when existing data doesn't satisfy the new assumptions, who relied on the old behavior, and so on.
 5. **Qualify each candidate** using the format below. Resolve every factual uncertainty by investigating. An uncertainty that depends on a choice Step 3 will make is not a gap: record the impact as conditional on that choice. An uncertainty you cannot resolve by investigating is an overturn (see `SKILL.md`).
-6. **Check against the input dossier.** Before handing off, check every candidate against the overturn triggers in `SKILL.md`: does it contradict the Context or a settled decision, or could it only be addressed by changing the Task Brief?
+6. **Check against the input dossier.** Before handing off, check every candidate against the overturn triggers in `SKILL.md`: does it contradict the Context or a settled decision, could it only be addressed by changing the Task Brief?
 
 ## Candidate impact format
 
@@ -33,12 +33,11 @@ Hold candidates in the conversation, one per impact:
 - **ID**: `C<n>`
 - **Title**: a short name for the impact.
 - **Lens**: the lens that surfaced it.
-- **Elements**: the affected paths, modules, services, endpoints, screens, or data, and their direction (origin, upstream, or downstream).
-- **Evidence**: file paths, references, docs, or history that show the impact is real.
-- **Consequence**: what goes wrong, and for whom, if it is left unaddressed.
 - **Severity**: per the scale below.
 - **Breaking**: `Yes` if it breaks an existing contract or behavior someone relies on; otherwise `No`.
 - **Condition**: the Step 3 choice that triggers it, or `Unconditional`.
+- **Evidence**: file paths, references, docs, or history that show the impact is real.
+- **Consequence**: what goes wrong, and for whom, if it is left unaddressed.
 - **Recommendation**: your recommended disposition and, for Mitigate, the draft obligation (see `GRILL-IMPACT.md`).
 
 ## Severity scale
