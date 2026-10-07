@@ -1,6 +1,6 @@
 # <task_name>
 
-Source: <ClickUp link, or "free text"> · Status: Pending/Impact Pending/Completed
+Source: <ClickUp link, or "free text">
 Processed questions through Q<n>
 
 ## 1. Change Summary
@@ -23,9 +23,9 @@ Processed questions through Q<n>
 ## 4. Obligations
 
 ### O<n> — <title>
-- **Requirement**: <what must hold, verifiable from outside the component>
+- **Requirements**: <what must hold, verifiable from outside the component>
 - **Applies**: <"Always", or "Under X condition">
-- **Verification**: <how the requirement is tested>
+- **Verification**: <observable evidence that it holds>
 - **Source**: I<n>[, I<m>]
 
 ## 5. Decision Log

@@ -1,6 +1,6 @@
 # Impact Lenses
 
-Apply every lens to every element on the impact map. The questions are prompts, not a checklist to answer in the dossier: record only the impacts they surface.
+The questions are prompts, not a checklist to answer in the dossier: record only the impacts they surface.
 
 ## 1. Contracts and interfaces
 Anything another party calls, reads, or parses: HTTP/GraphQL/RPC endpoints, events and messages, exported functions and types, CLI commands, configuration keys, file formats, webhooks.

@@ -1,6 +1,6 @@
 # Analysis: Red-Team the Task
 
-Find **every way fulfilling the task can affect the system beyond itself**, back each one with evidence, and prepare it for the developer to settle. Nothing is written to disk in this step.
+Find **every way fulfilling the task can affect the system beyond itself**, back each one with evidence, and prepare it for the user to settle. a working file is written in this step.
 
 ## Input
 
@@ -12,7 +12,7 @@ You are the Red Team. Your job is to find everything that breaks, not to reassur
 
 - Assume the task gets done in the most plausible way consistent with the brief and the codebase's conventions. Then also consider the other reasonable ways it could be done: an impact that only appears under some of them is a **conditional impact**.
 - An impact needs evidence. The absence of an impact is never recorded.
-- Facts are your job. Do not ask the developer for anything you can find in the repository, its docs, its git history, or the related work listed in the Context.
+- Facts are your job. Do not ask the user for anything you can find in the repository, its docs, its git history, or the related work listed in the Context.
 
 ## Procedure
 
@@ -28,25 +28,15 @@ You are the Red Team. Your job is to find everything that breaks, not to reassur
 
 ## Candidate impact format
 
-Hold candidates in the conversation, one per impact:
-
-- **ID**: `C<n>`
-- **Title**: a short name for the impact.
-- **Lens**: the lens that surfaced it.
-- **Severity**: per the scale below.
-- **Breaking**: `Yes` if it breaks an existing contract or behavior someone relies on; otherwise `No`.
-- **Condition**: the Step 3 choice that triggers it, or `Unconditional`.
-- **Evidence**: file paths, references, docs, or history that show the impact is real.
-- **Consequence**: what goes wrong, and for whom, if it is left unaddressed.
-- **Recommendation**: your recommended disposition and, for Mitigate, the draft obligation (see `GRILL-IMPACT.md`).
+Write candidates to the working file, one per impact. Use the Impact fields from the Dossier Template, plus "**Recommendation**: your recommended disposition and, for Mitigate, the draft obligation (see `GRILL-IMPACT.md`).".
 
 ## Severity scale
 
 - **Critical**: data loss or corruption, a security or privacy breach, or a breaking change to a production consumer with no coordination.
-- **High**: a regression in existing user-facing behavior, or an acceptance criterion that can't be met as things stand.
+- **High**: a regression in existing user-facing behavior, or an acceptance criterion what wouldn't be met unless mitigated.
 - **Medium**: degraded but working behavior: performance, reliability, operability, or experience visibly worse.
 - **Low**: a minor or cosmetic effect with no functional consequence.
 
 ## Completion
 
-This step is done when every lens has been applied to every element on the impact map, every candidate has evidence, and every candidate has been checked against the overturn triggers. If any overturn was found, follow the overturn procedure in `SKILL.md` instead of continuing. Otherwise, hand the candidates to `GRILL-IMPACT.md`.
+When the procedure is done, hand the candidates to GRILL-IMPACT.md, unless an overturn was found.
