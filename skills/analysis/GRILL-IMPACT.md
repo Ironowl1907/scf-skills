@@ -12,7 +12,7 @@ Every real impact gets exactly one disposition:
 
 - **Mitigate**: the task must address it. Produces one or more obligations.
 - **Accept**: the impact is real and knowingly left as is. Requires a rationale. A Critical or High impact may only be accepted with the user's explicit rationale, never on your recommendation alone.
-- **Defer**: the impact is real and will be handled outside this task. Requires a destination (an existing ticket, or a decision that a new follow-up ticket will be created). If deferring it would leave an acceptance criterion unmet, it is an overturn instead (see `SKILL.md`).
+- **Defer**: the impact is real and will be handled outside this task. Requires a destination (an existing ticket, or a decision that a new follow-up ticket will be created). If deferring it would leave an acceptance criterion unmet, it is an overturn instead (see Overturning).
 
 An impact the user judges as not real, or not relevant to this task, is **dismissed**: it leaves no trace in the dossier except its Decision Log entry.
 
@@ -29,7 +29,7 @@ A conditional impact produces a conditional obligation: "<under X condition>, <w
 
 ## Grilling session
 
-Run **one** grilling session (it may span several rounds), following the Grilling Protocol. Seed the tree with one branch per candidate impact, in order by most severe, then breaking changes first within each severity. After each round, write the verdicts to the working file.
+Run **one** grilling session (it may span several rounds), following the Grilling Protocol. Seed the tree with one branch per candidate impact, in order by most severe, then breaking changes first within each severity.
 
 For each candidate, ask a single question that presents the evidence and consequence and recommends a validity verdict, a disposition, and, for Mitigate, the draft obligation wording. The user accepts or amends it. Split a candidate into separate follow-up questions only if the user contests part of it.
 
@@ -37,7 +37,7 @@ Keep the tree tight:
 
 - When one decision settles several candidates (e.g. "the endpoint stays backward compatible" resolves every consumer impact on it), ask it once, as the parent of those branches.
 - If the user raises a new impact, red-team it first (evidence, severity, condition) and then add it as a branch.
-- If an answer can only be given by changing the Task Brief, or rests on a fact that belongs in the Context, stop and follow the overturn procedure in `SKILL.md`.
+- If an answer can only be given by changing the Task Brief, or rests on a fact that belongs in the Context, stop and follow the overturn procedure.
 - If a question drifts toward *how* to implement the task, note that it belongs to Step 3 and move on.
 
 ## Completion rule
