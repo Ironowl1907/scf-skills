@@ -1,0 +1,1 @@
+../../skills/analysis/assets/analysis.md

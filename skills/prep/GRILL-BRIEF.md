@@ -23,4 +23,4 @@ Then show the user how the brief file will look like and ask them to confirm it.
 
 ## Writing the file
 
-Once the user confirms, update the dossier file: Fill in the Task Brief section and append this session's decisions to the Decision Log. On a re-run, update the brief in place and append new decisions instead of rewriting the log. Leave the Context section untouched. Write the file's contents in the user's language.
+Once the user confirms, update the dossier file: Set the Status to 'Context Pending', fill in the Task Brief section and append this session's decisions to the Decision Log. On a re-run, update the brief in place and append new decisions instead of rewriting the log. Leave the Context section untouched. Write the file's contents in the user's language.
