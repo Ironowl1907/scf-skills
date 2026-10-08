@@ -1,0 +1,65 @@
+version: 1
+name: "Task Specification Template"
+
+metadata:
+  task_name:
+    type: string
+    required: true
+  source:
+    type: string
+    description: "ClickUp link or free text"
+  status:
+    type: enum
+    options:
+      - Pending
+      - Context Pending
+      - Completed
+    default: Pending
+
+sections:
+  - id: task_brief
+    title: "1. Task Brief"
+    subsections:
+      - title: "Problem Statement"
+        format: paragraph
+        prompt: "The problem, from the user's perspective."
+
+      - title: "Expected Outcome"
+        format: paragraph
+        prompt: "What 'done' looks like, from the user's perspective."
+
+      - title: "Acceptance Criteria"
+        format: ordered_list
+        prompt: "Verifiable criterion"
+
+      - title: "Out of Scope"
+        format: bullet_list
+        prompt: "Item"
+
+  - id: context
+    title: "2. Context"
+    subsections:
+      - title: "Codebase"
+        format: bullet_list
+        item_schema: "`<path or module>` — <why it matters>"
+
+      - title: "Conventions & Prior Art"
+        format: bullet_list
+        item_schema: "<Pattern, ADR, or past work> — <how it applies>"
+
+      - title: "Related Work"
+        format: bullet_list
+        item_schema: "<Ticket / PR / branch> — <relationship>"
+
+      - title: "External References"
+        format: bullet_list
+        item_schema: "<Doc / API / spec> — <what it's needed for>"
+
+      - title: "Constraints"
+        format: bullet_list
+        prompt: "Constraint"
+
+  - id: decision_log
+    title: "3. Decision Log"
+    format: bullet_list
+    item_schema: "**Q<n>** — <question title>: <decision>"
