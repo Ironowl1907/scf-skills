@@ -1,6 +1,6 @@
 # Analysis: Red-Team the Task
 
-Find **every way fulfilling the task can affect the system beyond itself**, back each one with evidence, and prepare it for the user to settle. a working file is written in this step.
+Find **every way fulfilling the task can affect the system beyond itself**, back each one with evidence, and prepare it for the user to settle. A working file is written in this step.
 
 ## Input
 
@@ -31,7 +31,7 @@ Write candidates to the working file, one per impact. Use the Impact fields from
 ## Severity scale
 
 - **Critical**: data loss or corruption, a security or privacy breach, or a breaking change to a production consumer with no coordination.
-- **High**: a regression in existing user-facing behavior, or an acceptance criterion what wouldn't be met unless mitigated.
+- **High**: a regression in existing user-facing behavior, or an acceptance criterion that wouldn't be met unless mitigated.
 - **Medium**: degraded but working behavior: performance, reliability, operability, or experience visibly worse.
 - **Low**: a minor or cosmetic effect with no functional consequence.
 
