@@ -13,6 +13,7 @@ Compile everything the later steps of the framework need to know about **one tas
 - [Context Grilling](GRILL-CONTEXT.md)
 - [Grilling Protocol](references/grilling.md)
 - [Dossier Template](assets/brif-and-context.md)
+- [Output file structure enforcer script](scripts/dossier_checker)
 - Output File Directory: `.ai/tasks/<task_name>/01-brief-and-context.md`
 
 ## Input
@@ -27,7 +28,8 @@ The user's invoking message contains the task: a free-text user story, and/or a 
 2. **Check for an existing dossier file** matching this task (same ClickUp ID or same slug). If one exists, this is a re-run: read it, and treat every entry in its Decision Log as a settled branch. Only grill what is missing or what the user says has changed.
 3. **Read and execute the brief grilling** with the resolved story. It proposes the `<task_name>`, creates the file, and writes the Task Brief once the user confirms it.
 4. **Read and execute the context grilling** on the same task. It writes the Context section once the user confirms it.
-5. **Finish**: tell the user the file's path and that Preparation is complete, and say that the next step is Analysis & Design.
+5. Run [this](scripts/dossier_checker) python script for checking the structure correctness of the outputted dossier. Inform warnings and do not proceed if errors are present.
+6. **Finish**: tell the user the file's path and that Preparation is complete, and say that the next step is Analysis & Design.
 
 Each step is blocked from execution until the one before it has run to completion.
 Do not declare Preparation complete until both sessions are confirmed.
