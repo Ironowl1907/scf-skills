@@ -31,8 +31,9 @@ Conventions shared by the Systemic Context Framework skills. New skills follow t
 
 ## 6. Dossiers and files
 
+- The Dossiers' structure is defined in a JSON file that lives in `assets/`. A template is generated off it with a script to be filled in, and the completed Dossier is then re-validated using a different script.
 - All files for a task live in `.ai/tasks/<task_name>/`, named `NN-<name>.md`, where `NN` is the step number (`01-brief-and-context.md`, `02-analysis.md`, etc.).
-- Templates live in `assets/` and use numbered `##` sections. Section headings and field labels are fixed English text so later steps can locate them; all other content is written in the user's language.
+- Content may be written in the user's language of choice, but section headings and labels must stay untouched.
 - A skill never modifies another step's dossier.
 - Temporary working files sit next to the dossier as `NN-<name>.<suffix>.md` and are deleted when the step completes.
 - The user is shown the complete file as it will be written and asked for confirmation. Nothing is written before the user confirms.
@@ -43,12 +44,12 @@ Conventions shared by the Systemic Context Framework skills. New skills follow t
 - Each dossier restarts the numbering at Q1; it never continues an input dossier's numbering.
 - Every entry in any Decision Log a skill reads is a settled branch and is never re-asked.
 - On a re-run, the dossier is updated in place, existing IDs stay stable, and new decisions are appended rather than rewriting the log.
-- A dossier that consumes other/s records the last question ID/s it processed from them (`Processed <input dossier> questions through Q<n>`), so re-runs can detect upstream changes.
+- A dossier that consumes other/s records the last question ID/s it processed from them (`Processed <input dossier> questions through Q<n>`), so a script can detect upstream changes when on a re-run.
 
 ## 8. Overturning
 
-- When a skill finds a gap in its upstream dossiers, it does not create or update its own output dossier.
+- When a skill finds a gap in its upstream dossiers, it does not create or update its own output dossier. It may, though, create and update working files as necessary to preserve information that's not blocked by the reported gap.
 - It writes the gap report to a dedicated file: `.ai/tasks/<task_name>/NN-<name>.overturn.md`.
 - Each gap in the report states: what is missing or contradicted, the evidence, the target dossier and section, the skill(s) to re-run (in order), and the question that skill needs to settle.
 - The skill tells the user to re-run the named skill(s) in order, passing them the report, and to only then invoke it again.
-- A run that completes successfully deletes any existing overturn report for its step.
+- A run that completes successfully deletes any existing working files for its step.
