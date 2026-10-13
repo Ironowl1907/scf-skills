@@ -25,11 +25,10 @@ def example(block):
     return block.get("item_schema") or "<%s>" % (block.get("prompt") or block["title"]).rstrip(".").lower()
 
 
-def schema_regex(schema):
-    parts = re.split(r"(<[^<>]+>)", schema)
-    rx = "".join(r"\d+" if p == "<n>" else ".+?" if PLACEHOLDER.fullmatch(p)
-                 else re.escape(p) for p in parts)
-    return re.compile("^" + rx.replace("—", "[—–-]") + "$")
+def field_example(f):
+    s = f.get("schema") or "<%s>" % (" | ".join(
+        f["options"]) if "options" in f else f.get("prompt", f["name"]))
+    return " | ".join(s) if isinstance(s, list) else s
 
 
 # ---------------------------------------------------------------- render
@@ -37,7 +36,7 @@ def schema_regex(schema):
 def render(t):
     out = ["---"]
     for key, spec in t["metadata"].items():
-        if isinstance(spec, dict):
+        if isinstance(spec, dict) and "options" in spec:
             out.append("%s: %s  # one of: %s" % (key, spec.get(
                 "default", spec["options"][0]), " | ".join(spec["options"])))
         else:
@@ -51,7 +50,13 @@ def render(t):
             hint = b["format"].replace("_", " ").replace("string", "prose")
             hint += " · optional" if b.get(
                 "required") is False else " · required"
-            out += ["<!-- %s -->" % hint, MARKER[b["format"]] + example(b)]
+            if b["format"] == "entries":
+                out += ["<!-- %s · repeat per entry -->" %
+                        hint, "", "### " + b["heading_schema"]]
+                out += ["- **%s**: %s" %
+                        (f["name"], field_example(f)) for f in b["fields"]]
+            else:
+                out += ["<!-- %s -->" % hint, MARKER[b["format"]] + example(b)]
     return "\n".join(out) + "\n"
 
 
