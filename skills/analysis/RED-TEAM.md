@@ -1,6 +1,6 @@
 # Analysis: Red-Team the Task
 
-Find **every way fulfilling the task can affect the system beyond itself**, back each one with evidence, and prepare it for the user to settle. A working file is written in this step.
+Find **every way fulfilling the task can affect the system beyond itself**, back each one with evidence, and prepare it for the user to settle.
 
 ## Input
 
@@ -22,11 +22,11 @@ You are the Red Team. Your job is to find everything that breaks, not to reassur
    The Context is a starting point, not a boundary: follow references wherever they lead. Use git history on the areas involved; past fixes there often encode invariants the task can violate. If you can dispatch sub-agents, explore lenses or directions in parallel.
 3. **Sweep every impact lens** across every element on the map.
 4. **Attack.** For each affected element, ask what happens when input is malicious, when a dependency is down, when existing data doesn't satisfy the new assumptions, who relied on the old behavior, and so on.
-5. **Qualify each candidate** using the format below. Resolve every factual uncertainty by investigating. An uncertainty that depends on a choice Step 3 will make is not a gap: record the impact as conditional on that choice. An uncertainty you cannot resolve by investigating, or contradicts information on the Input Dossier is an overturn (see Overturning).
+5. **Qualify each candidate** using the format below. Resolve every factual uncertainty by investigating. An uncertainty that depends on a choice Step 3 will make is not a gap: record the impact as conditional on that choice. An uncertainty you cannot resolve by investigating, or one that contradicts the Input Dossier is an overturn (see Overturning).
 
-## Candidate impact format
+## Writing the file
 
-Write candidates to the working file, one per impact. Use the Impact fields from the Dossier Template, plus "**Recommendation**: your recommended disposition and, for Mitigate, the draft obligation (see Impact Grilling).".
+Write candidates to the Candidates File, one per impact. Use the Impact fields from the Dossier Template plus "**Recommendation**: your recommended disposition and, for Mitigate, the draft obligation (see Impact Grilling)."
 
 ## Severity scale
 

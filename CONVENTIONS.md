@@ -18,16 +18,16 @@ Conventions shared by the Systemic Context Framework skills. New skills follow t
 ## 3. References section
 
 - Lists every bundled file as a relative Markdown link (sub-procedures, `references/…`, `assets/…`).
-- Lists every path the skill reads or writes under `.ai/tasks/<task_name>/` by default: input file(s), output file, working file, overturn report.
+- Lists every path the skill reads or writes under `.ai/tasks/<task_name>/` by default: input file(s), output file, and other files.
 
 ## 4. Sub-procedures
 
 - Live at the skill root, named in uppercase verb-noun form (`GRILL-BRIEF.md`, `RED-TEAM.md`, `GRILL-IMPACT.md`).
-- Each contains, as applicable: **Input**, the procedure itself (e.g. **Grilling session**, **Procedure**), a **Completion** rule, and **Writing the file**.
+- Each contains, as applicable: **Input**, the procedure itself (e.g. **Grilling session**, **Procedure**), a **Completion** [rule], and **Writing the file**.
 
 ## 5. Shared references
 
-- All shared references are byte-identical copies accross skills. The only examples of this at the time of writing are `grilling.md` and `impact-lenses.md`
+- All shared references are byte-identical copies across skills. The only examples of this at the time of writing are `grilling.md` and `impact-lenses.md`
 
 ## 6. Dossiers and files
 
@@ -43,8 +43,8 @@ Conventions shared by the Systemic Context Framework skills. New skills follow t
 - Every dossier ends with a Decision Log whose entries read `**Q<n>** — <question title>: <decision>`.
 - Each dossier restarts the numbering at Q1; it never continues an input dossier's numbering.
 - Every entry in any Decision Log a skill reads is a settled branch and is never re-asked.
-- On a re-run, the dossier is updated in place, existing IDs stay stable, and new decisions are appended rather than rewriting the log.
-- A dossier that consumes other/s records the last question ID/s it processed from them (`Processed <input dossier> questions through Q<n>`), so a script can detect upstream changes when on a re-run.
+- On a re-run, the dossier is updated in place, existing IDs stay stable, and new decisions are appended rather than rewriting the log. Decisions reopened by an Overturn can be superseded, but are never overwritten or deleted.
+- A dossier that consumes others records the last question IDs it processed from them (`Processed <input dossier; e.g. 01-brief-and-context> questions through Q<n>`), so a script can detect upstream changes when on a re-run.
 
 ## 8. Overturning
 

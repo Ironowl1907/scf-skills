@@ -7,6 +7,7 @@ Compile **all the context and reference material** needed for the task described
 Read the Dossier's Brief section. It must be filled in and confirmed.
 If it isn't, stop and let the user know, then abort your task.
 Treat every entry already in the Decision Log as a settled branch.
+If an overturn report was passed, grill every gap in it that targets the Context.
 
 ## Grilling session
 
@@ -24,6 +25,10 @@ Follow the grilling protocol, seeding the tree with these branches and expanding
 
 Record facts and pointers, not designs. If a question drifts toward *how* to implement the task, note that it belongs to later steps and move on.
 
+## Completion
+
+The session is done only when every branch has been settled and no open questions remain.
+
 ## Writing the file
 
-Once the user confirms, fill in the Dossier's Context section using the predefined structure, filling in every subsection (write "None" where something genuinely doesn't apply). Append this session's decisions to the Decision Log, and update the status line to `Completed`. On a re-run, update entries in place. File paths are encouraged here. Write the file's contents in the user's language, but keep the template's section headings and field labels unchanged so later steps can locate them.
+Show the user the complete dossier file as it will be written and wait for their confirmation, fill in the Dossier's Context section using the predefined structure, filling in every subsection (write "None" where something genuinely doesn't apply). Append this session's decisions to the Decision Log, and update the status line to `Completed`. On a re-run, update the Context in place and append new decisions to the Decision Log. File paths are encouraged here. Write the file's contents in the user's language, but keep the template's section headings and field labels unchanged so later steps can locate them.
