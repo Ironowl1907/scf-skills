@@ -1,14 +1,9 @@
-version: 1
-name: "Task Specification Template"
+version: 1.0
 
 metadata:
-  task_name:
-    type: string
-    required: true
-  source:
-    type: string
-    description: "ClickUp link or free text"
-  status:
+  task_name: string
+  description: string
+  status: 
     type: enum
     options:
       - Pending
@@ -21,11 +16,11 @@ sections:
     title: "1. Task Brief"
     subsections:
       - title: "Problem Statement"
-        format: paragraph
+        format: string
         prompt: "The problem, from the user's perspective."
 
       - title: "Expected Outcome"
-        format: paragraph
+        format: string
         prompt: "What 'done' looks like, from the user's perspective."
 
       - title: "Acceptance Criteria"
@@ -63,3 +58,4 @@ sections:
     title: "3. Decision Log"
     format: bullet_list
     item_schema: "**Q<n>** — <question title>: <decision>"
+
