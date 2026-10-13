@@ -1,0 +1,59 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "task_name": "string",
+    "source": { "type": "string", "prompt": "ClickUp link, or \"free text\"" },
+    "processed_through": { "type": "string", "schema": "Q<n>", "prompt": "Last decision-log question processed" }
+  },
+  "sections": [
+    {
+      "title": "1. Change Summary",
+      "format": "string",
+      "prompt": "In 2–5 sentences: what fulfilling the task introduces, modifies, or removes in the system (behaviors, contracts, data, responsibilities, etc.)."
+    },
+    {
+      "title": "2. Impact Map",
+      "format": "bullet_list",
+      "item_schema": "`<path, module, service, endpoint, screen, or data>` — Relationship: <origin | upstream | downstream> — <one-line effect description> — Impacts: <impact ids, e.g. I1, I2>"
+    },
+    {
+      "title": "3. Impacts",
+      "format": "entries",
+      "heading_schema": "I<n> — <title>",
+      "fields": [
+        { "name": "Lens", "prompt": "Lens from the impact lenses" },
+        { "name": "Severity", "options": ["Critical", "High", "Medium", "Low"] },
+        { "name": "Breaking", "options": ["Yes", "No"] },
+        { "name": "Condition", "prompt": "One-line explanation, or \"Unconditional\"" },
+        { "name": "Evidence", "prompt": "File paths, references, docs, or history" },
+        { "name": "Consequence", "prompt": "What goes wrong, and for whom, if unaddressed" },
+        {
+          "name": "Disposition",
+          "schema": [
+            "Mitigate via: <obligation ids, e.g. O1, O2> (Settled in: Q<n>)",
+            "Accept: <rationale> (Settled in: Q<n>)",
+            "Defer: <destination>: <rationale> (Settled in: Q<n>)"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "4. Obligations",
+      "format": "entries",
+      "heading_schema": "O<n> — <title>",
+      "required": false,
+      "fields": [
+        { "name": "Requirements", "prompt": "What must hold, verifiable from outside the component" },
+        { "name": "Applies", "prompt": "\"Always\", or \"Under X condition\"" },
+        { "name": "Verification", "prompt": "Observable evidence that it holds" },
+        { "name": "Source", "schema": "<impact ids, e.g. I1, I2>" }
+      ]
+    },
+    {
+      "title": "5. Decision Log",
+      "format": "bullet_list",
+      "item_schema": "**Q<n>** — <question title>: <decision>",
+      "required": false
+    }
+  ]
+}
