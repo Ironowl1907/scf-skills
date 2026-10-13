@@ -42,8 +42,7 @@ def render(t):
                 "default", spec["options"][0]), " | ".join(spec["options"])))
         else:
             out.append("%s: <%s>" % (key, key))
-    out += ["---", "", "<!-- Keep headings verbatim and in order. Replace every <placeholder>. "
-                       "Optional lists with nothing to record: '- None'. Comments are ignored. -->"]
+    out += ["---"]
     for s in t["sections"]:
         out += ["", "## " + s["title"]]
         for sub, b in blocks(s):
@@ -52,8 +51,6 @@ def render(t):
             hint = b["format"].replace("_", " ").replace("string", "prose")
             hint += " · optional" if b.get(
                 "required") is False else " · required"
-            if b.get("item_schema") or b.get("prompt"):
-                hint += " · " + (b.get("item_schema") or b["prompt"])
             out += ["<!-- %s -->" % hint, MARKER[b["format"]] + example(b)]
     return "\n".join(out) + "\n"
 
