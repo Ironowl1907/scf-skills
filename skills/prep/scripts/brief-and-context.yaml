@@ -3,7 +3,7 @@ version: 1.0
 metadata:
   task_name: string
   description: string
-  status: 
+  status:
     type: enum
     options:
       - Pending
@@ -14,6 +14,7 @@ metadata:
 sections:
   - id: task_brief
     title: "1. Task Brief"
+    required_at: Context Pending
     subsections:
       - title: "Problem Statement"
         format: string
@@ -33,6 +34,7 @@ sections:
 
   - id: context
     title: "2. Context"
+    required_at: Completed
     subsections:
       - title: "Codebase"
         format: bullet_list
@@ -58,4 +60,3 @@ sections:
     title: "3. Decision Log"
     format: bullet_list
     item_schema: "**Q<n>** — <question title>: <decision>"
-
