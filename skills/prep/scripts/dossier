@@ -1,0 +1,194 @@
+#!/usr/bin/env python3
+"""Dossier checker (Python 3.8+, standard library only).
+
+  python3 dossier.py render [template.json] > dossier.md
+  python3 dossier.py validate dossier.md [template.json]
+
+The JSON template is the single source of truth. Exit codes: 0 ok, 1 invalid, 2 usage.
+"""
+import json
+import re
+import sys
+from pathlib import Path
+
+DEFAULT_TEMPLATE = Path(__file__).absolute().parents[0] / \
+    "../assets/brief-and-context.json"
+MARKER = {"string": "", "ordered_list": "1. ", "bullet_list": "- "}
+PLACEHOLDER = re.compile(r"<([^<>\n]+)>")
+ITEM = re.compile(r"^(\d+[.)]|[-*+])\s+(.*)")
+NONE = re.compile(r"^[_*]*(none|n/a)[_*.]*$", re.I)
+
+
+def blocks(section):
+    """(subsection title or None, block) pairs for a section."""
+    if "format" in section:
+        return [(None, section)]
+    return [(sub["title"], sub) for sub in section["subsections"]]
+
+
+def example(block):
+    return block.get("item_schema") or "<%s>" % (block.get("prompt") or block["title"]).rstrip(".").lower()
+
+
+def schema_regex(schema):
+    parts = re.split(r"(<[^<>]+>)", schema)
+    rx = "".join(r"\d+" if p == "<n>" else ".+?" if PLACEHOLDER.fullmatch(p)
+                 else re.escape(p) for p in parts)
+    return re.compile("^" + rx.replace("—", "[—–-]") + "$")
+
+
+# ---------------------------------------------------------------- render
+
+def render(t):
+    out = ["---"]
+    for key, spec in t["metadata"].items():
+        if isinstance(spec, dict):
+            out.append("%s: %s  # one of: %s" % (key, spec.get(
+                "default", spec["options"][0]), " | ".join(spec["options"])))
+        else:
+            out.append("%s: <%s>" % (key, key))
+    out += ["---", "", "<!-- Keep headings verbatim and in order. Replace every <placeholder>. "
+                       "Optional lists with nothing to record: '- None'. Comments are ignored. -->"]
+    for s in t["sections"]:
+        out += ["", "## " + s["title"]]
+        for sub, b in blocks(s):
+            if sub:
+                out += ["", "### " + sub]
+            hint = b["format"].replace("_", " ").replace("string", "prose")
+            hint += " · optional" if b.get(
+                "required") is False else " · required"
+            if b.get("item_schema") or b.get("prompt"):
+                hint += " · " + (b.get("item_schema") or b["prompt"])
+            out += ["<!-- %s -->" % hint, MARKER[b["format"]] + example(b)]
+    return "\n".join(out) + "\n"
+
+
+# ---------------------------------------------------------------- validate
+
+def parse(path):
+    """Return (metadata {key: (line, value)}, heading lines, content lines per (h2, h3))."""
+    lines = Path(path).read_text(encoding="utf-8").split("\n")
+    meta, start = {}, 0
+    if lines[0].strip() == "---":
+        found = {}
+        for i, line in enumerate(lines[1:], 2):
+            if line.strip() == "---":
+                meta, start = found, i
+                break
+            if ":" in line:
+                key, value = line.split(":", 1)
+                found[key.strip()] = (i, value.split(" #")
+                                      [0].strip().strip("\"'"))
+    body = re.sub(r"<!--.*?-->", lambda m: "\n" *
+                  m.group().count("\n"), "\n".join(lines[start:]), flags=re.S)
+    heads, content, h2, key = {}, {}, None, None
+    for i, line in enumerate(body.split("\n"), start + 1):
+        m = re.match(r"^(##|###)\s+(.*?)\s*$", line)
+        if m:
+            if m.group(1) == "##":
+                h2 = m.group(2)
+            key = (h2, None) if m.group(1) == "##" else (h2, m.group(2))
+            heads.setdefault(key, i)
+            content.setdefault(key, [])
+        elif key and line.strip():
+            content[key].append((i, line))
+    return meta, heads, content
+
+
+def check_block(b, lines, head_line, where):
+    errors, required = [], b.get("required", True)
+    names = {p.casefold() for p in PLACEHOLDER.findall(example(b))}
+    items = [(i, ITEM.match(l)) for i, l in lines if ITEM.match(l)]
+    prose = [(i, l)
+             for i, l in lines if not l[0].isspace() and not ITEM.match(l)]
+
+    for i, text in prose + [(i, m.group(2)) for i, m in items]:
+        left = [p for p in PLACEHOLDER.findall(text) if p.casefold() in names]
+        if left:
+            errors.append((i, "%s: unfilled placeholder <%s>" %
+                          (where, left[0])))
+
+    if b["format"] == "string":
+        if items:
+            errors.append(
+                (items[0][0], where + ": expected prose, found a list"))
+        elif not prose and required:
+            errors.append((head_line, where + ": is empty"))
+        return errors
+
+    if prose:
+        errors.append((prose[0][0], "%s: expected a %s, found prose" % (
+            where, b["format"].replace("_", " "))))
+    real = [(i, m) for i, m in items if not NONE.match(m.group(2))]
+    if not real:
+        if required:
+            errors.append(
+                (head_line, where + ": required list is empty or 'None'"))
+        return errors
+
+    ordered = b["format"] == "ordered_list"
+    rx = schema_regex(b["item_schema"]) if "item_schema" in b else None
+    for n, (i, m) in enumerate(real, 1):
+        if m.group(1)[0].isdigit() != ordered:
+            errors.append((i, "%s: item %d should start with '%s'" %
+                          (where, n, "1." if ordered else "-")))
+        if rx and not rx.match(m.group(2)) and not PLACEHOLDER.search(m.group(2)):
+            errors.append((i, "%s: item %d does not match '%s'" %
+                          (where, n, b["item_schema"])))
+    return errors
+
+
+def validate(t, path):
+    meta, heads, content = parse(path)
+    errors = []
+    for key, spec in t["metadata"].items():
+        line, value = meta.get(key, (1, ""))
+        if not value or PLACEHOLDER.fullmatch(value):
+            errors.append((line, "metadata '%s' is missing or unfilled" % key))
+        elif isinstance(spec, dict) and value not in spec["options"]:
+            errors.append((line, "metadata '%s': '%s' is not one of: %s" % (
+                key, value, ", ".join(spec["options"]))))
+
+    last = 0
+    for s in t["sections"]:
+        title = s["title"]
+        if (title, None) not in heads:
+            errors.append((None, "missing heading '## %s'" % title))
+            continue
+        for sub, b in blocks(s):
+            key = (title, sub)
+            if key not in heads:
+                errors.append(
+                    (None, "missing heading '### %s' in '%s'" % (sub, title)))
+                continue
+            if heads[key] < last:
+                errors.append(
+                    (heads[key], "heading '%s' is out of order" % (sub or title)))
+            last = heads[key]
+            errors += check_block(b, content[key], heads[key],
+                                  title + (" > " + sub if sub else ""))
+    return sorted(errors, key=lambda e: e[0] or 0)
+
+
+def main(args):
+    if args[:1] == ["render"] and len(args) <= 2:
+        t = json.loads(Path(args[1] if len(
+            args) > 1 else DEFAULT_TEMPLATE).read_text(encoding="utf-8"))
+        sys.stdout.write(render(t))
+        return 0
+    if args[:1] == ["validate"] and 2 <= len(args) <= 3:
+        t = json.loads(Path(args[2] if len(
+            args) > 2 else DEFAULT_TEMPLATE).read_text(encoding="utf-8"))
+        errors = validate(t, args[1])
+        for line, msg in errors:
+            print("%s%s: error: %s" %
+                  (args[1], ":%d" % line if line else "", msg))
+        print("%s: %s" % (args[1], "INVALID (%d errors)" %
+              len(errors) if errors else "VALID"))
+        return 1 if errors else 0
+    print(__doc__)
+    return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

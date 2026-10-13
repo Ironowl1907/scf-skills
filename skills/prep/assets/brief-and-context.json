@@ -1,0 +1,35 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "task_name": "string",
+    "description": "string",
+    "status": { "type": "enum", "options": ["Pending", "Context Pending", "Completed"], "default": "Pending" }
+  },
+  "sections": [
+    {
+      "title": "1. Task Brief",
+      "subsections": [
+        { "title": "Problem Statement", "format": "string", "prompt": "The problem, from the user's perspective." },
+        { "title": "Expected Outcome", "format": "string", "prompt": "What 'done' looks like, from the user's perspective." },
+        { "title": "Acceptance Criteria", "format": "ordered_list", "prompt": "Verifiable criterion" },
+        { "title": "Out of Scope", "format": "bullet_list", "prompt": "Item", "required": false }
+      ]
+    },
+    {
+      "title": "2. Context",
+      "subsections": [
+        { "title": "Codebase", "format": "bullet_list", "item_schema": "`<path or module>` — <why it matters>" },
+        { "title": "Conventions & Prior Art", "format": "bullet_list", "item_schema": "<Pattern, ADR, or past work> — <how it applies>", "required": false },
+        { "title": "Related Work", "format": "bullet_list", "item_schema": "<Ticket / PR / branch> — <relationship>", "required": false },
+        { "title": "External References", "format": "bullet_list", "item_schema": "<Doc / API / spec> — <what it's needed for>", "required": false },
+        { "title": "Constraints", "format": "bullet_list", "prompt": "Constraint", "required": false }
+      ]
+    },
+    {
+      "title": "3. Decision Log",
+      "format": "bullet_list",
+      "item_schema": "**Q<n>** — <question title>: <decision>",
+      "required": false
+    }
+  ]
+}
