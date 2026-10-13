@@ -13,7 +13,9 @@ Determine what fulfilling one task **does to the system around it**, and settle 
 - [Impact Grilling](GRILL-IMPACT.md)
 - [Impact Lenses](references/impact-lenses.md)
 - [Grilling Protocol](references/grilling.md)
-- [Dossier Template](assets/analysis.md)
+- [Dossier Template](assets/analysis.json)
+- [Template Generator Script](scripts/dossier_renderer)
+- [Validation Script](scripts/dossier_validator)
 - Working File: `.ai/tasks/<task_name>/02-analysis.candidates.md`
 - Input File: `.ai/tasks/<task_name>/01-brief-and-context.md`
 - Output File: `.ai/tasks/<task_name>/02-analysis.md`
@@ -29,10 +31,12 @@ The user's invoking message identifies the task by `<task_name>`, by ClickUp ID/
 ## Process
 
 1. **Resolve and validate the input** as described above.
-2. **Check for an existing output dossier and working file.** If an output dossier exists, this is a re-run: read it and treat every entry in its Decision Log as settled. Compare its `Processed questions` line with the input dossier's Decision Log: if its Decision Log goes beyond the recorded Q<n>, context has changed since the last run, so re-examine every impact those entries touch. If a working file exists, delete it. Chances are the context it relied on has changed.
-3. **Read and execute `RED-TEAM.md`.** It produces the candidate impacts.
-4. **Read and execute `GRILL-IMPACT.md`.** It settles every candidate with the user and writes the output dossier once they confirm it.
-5. **Finish**: tell the user the output file's path, that Analysis is complete, and that the next step is Implementation Proposal.
+2. Generate the Dossier template by using the Template Generator Script.
+3. **Check for an existing output dossier and working file.** If an output dossier exists, this is a re-run: read it and treat every entry in its Decision Log as settled. Compare its `Processed questions` line with the input dossier's Decision Log: if its Decision Log goes beyond the recorded Q<n>, context has changed since the last run, so re-examine every impact those entries touch. If a working file exists, delete it. Chances are the context it relied on has changed.
+4. **Read and execute `RED-TEAM.md`.** It produces the candidate impacts.
+5. **Read and execute `GRILL-IMPACT.md`.** It settles every candidate with the user and writes the output dossier once they confirm it.
+6. Validate the Dossier using the Validation Script. Do not proceed if warnings or errors are raised; iterate on the dossier structure until all validation requirements pass.
+6. **Finish**: tell the user the output file's path, that Analysis is complete, and that the next step is Implementation Proposal.
 
 Each step is blocked until the one before it has run to completion. Do not declare Analysis complete while an overturn is pending.
 
