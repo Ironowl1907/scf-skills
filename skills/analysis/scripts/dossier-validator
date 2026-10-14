@@ -10,8 +10,6 @@ import re
 import sys
 from pathlib import Path
 
-DEFAULT_TEMPLATE = Path(__file__).absolute().parents[0] / \
-    "../assets/brief-and-context.json"
 MARKER = {"string": "", "ordered_list": "1. ", "bullet_list": "- "}
 PLACEHOLDER = re.compile(r"<([^<>\n]+)>")
 ITEM = re.compile(r"^(\d+[.)]|[-*+])\s+(.*)")
