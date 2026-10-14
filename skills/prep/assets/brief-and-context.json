@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "metadata": {
-    "task_name": "string",
-    "description": "string",
+    "task_name": "Brief and Context",
+    "description": "<Description>",
     "status": { "type": "enum", "options": ["Pending", "Context Pending", "Completed"], "default": "Pending" }
   },
   "sections": [
