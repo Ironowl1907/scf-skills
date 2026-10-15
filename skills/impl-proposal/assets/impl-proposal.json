@@ -1,0 +1,58 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "task_name": "string",
+    "source": { "type": "string", "prompt": "ClickUp link, or \"free text\"" }
+  },
+  "sections": [
+    {
+      "title": "1. Design Summary",
+      "format": "string",
+      "prompt": "In 2–5 sentences: the chosen design, and why it meets every acceptance criterion and obligation without worsening any deferred impact."
+    },
+    {
+      "title": "2. Recipe",
+      "format": "entries",
+      "heading_schema": "S<n> — <title>",
+      "fields": [
+        { "name": "Depends on", "schema": ["None", "<step ids, e.g. S1, S2>"] },
+        { "name": "Action", "options": ["Create", "Modify", "Delete", "Run"] },
+        { "name": "Touches", "prompt": "Exact file paths and symbols, e.g. `src/a.py` (`parse`, `Config.load`)" },
+        { "name": "Contract", "schema": ["None", "Literal, below"] },
+        { "name": "Behavior", "prompt": "Expected behavior once the step is done, with no open choices" },
+        { "name": "Checks", "schema": "<check ids, e.g. V1, V2>" }
+      ]
+    },
+    {
+      "title": "3. Checks",
+      "format": "entries",
+      "heading_schema": "V<n> — <title>",
+      "fields": [
+        { "name": "Method", "prompt": "Exact command or action, observable from outside the component" },
+        { "name": "Expected", "prompt": "Observable result that means the check passes" },
+        { "name": "Verifies", "prompt": "Criterion or obligation ids it verifies, e.g. AC1, O2, or \"None\"" }
+      ]
+    },
+    {
+      "title": "4. Certifications",
+      "format": "entries",
+      "heading_schema": "C<n> — <title>",
+      "required": false,
+      "fields": [
+        { "name": "Claim", "prompt": "What already holds, with no change needed" },
+        { "name": "Evidence", "prompt": "File paths, symbols, or references that prove it" }
+      ]
+    },
+    {
+      "title": "5. Traceability",
+      "format": "bullet_list",
+      "item_schema": "<criterion or obligation id> — Met by: <step or certification ids> — Checks: <check ids>"
+    },
+    {
+      "title": "6. Decision Log",
+      "format": "bullet_list",
+      "item_schema": "**Q<n>** — <question title>: <decision>",
+      "required": false
+    }
+  ]
+}
