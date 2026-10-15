@@ -40,7 +40,7 @@ def render(t):
             out.append("%s: %s  # one of: %s" % (key, spec.get(
                 "default", spec["options"][0]), " | ".join(spec["options"])))
         else:
-            out.append("%s: %s" % (key, spec))
+            out.append("%s: <%s>" % (key, key))
     out += ["---"]
     for s in t["sections"]:
         out += ["", "## " + s["title"]]

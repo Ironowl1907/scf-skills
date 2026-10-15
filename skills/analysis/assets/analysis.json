@@ -1,7 +1,9 @@
 {
   "version": "1.0",
   "metadata": {
-    "task_name": "Analysis"
+    "task_name": "string",
+    "source": { "type": "string", "prompt": "ClickUp link, or \"free text\"" },
+    "processed_through": { "type": "string", "schema": "Q<n>", "prompt": "Last decision-log question processed" }
   },
   "sections": [
     {
