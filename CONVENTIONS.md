@@ -2,10 +2,25 @@
 
 Conventions shared by the Systemic Context Framework skills. New skills follow them; existing skills that deviate are updated to match.
 
+## 0. General Observations and Philosophy
+
+### Decision making:
+
+- The User has every right to make any choice they see fit, regardless of the consequences. As such, the User is the only one responsible for their AI-assisted work.
+- The Agent's sole responsibility is to make sure that the User's choices and decisions, whatever they may be, are fully informed. Especially the more dangerous ones.
+- An agent must never, under any circumstances, supersede the User, even if it believes they're making a mistake.
+
+### Token usage and cognitive load:
+
+- Agents must not waste time, their own tokens or the user's cognitive energy confirming facts that can be derived from other established facts.
+Good: 'Follow these guidelines' -> Agent follows guidelines.
+Bad: 'Follow these guidelines' -> 'Q1- Should I conform to guideline 1.2? What about 1.3?'
+- All dialogue with the user follows the vendored Caveman protocol included in every skill.
+
 ## 1. Skill layout
 
 - All skills must follow the [Agent Skills](https://agentskills.io/specification) specification.
-- The `description` states the skill's step number and name in the framework, what it takes in and produces, and ends with: "Must only be invoked manually by the user."
+- The `description` states the skill's step number and name in the framework, what it takes in and produces, and ends with: "Must only be invoked manually by the User."
 - All skill files are written in English and are agent-agnostic. Optional capabilities are phrased conditionally ("If you can dispatch sub-agents, …").
 
 ## 2. `SKILL.md` as a lean orchestrator
@@ -13,7 +28,7 @@ Conventions shared by the Systemic Context Framework skills. New skills follow t
 - `SKILL.md` holds only orchestration; the detailed procedures live in sub-procedure files.
 - Its sections appear in this order: **References**, **Input**, **Process**, **Overturning** (optional), **Output**.
 - The Process list ends with: "Each step is blocked until the one before it has run to completion."
-- The last Process step tells the user the output file's path, that the step is complete, and which step comes next.
+- The last Process step tells the User the output file's path, that the step is complete, and which step comes next.
 
 ## 3. References section
 
@@ -33,10 +48,10 @@ Conventions shared by the Systemic Context Framework skills. New skills follow t
 
 - The Dossiers' structure is defined in a JSON file that lives in `assets/`. A template is generated off it with a script to be filled in, and the completed Dossier is then re-validated using a different script.
 - All files for a task live in `.ai/tasks/<task_name>/`, named `NN-<name>.md`, where `NN` is the step number (`01-brief-and-context.md`, `02-analysis.md`, etc.).
-- Content may be written in the user's language of choice, but section headings and labels must stay untouched.
+- Content may be written in the User's language of choice, but section headings and labels must stay untouched.
 - A skill never modifies another step's dossier.
 - Temporary working files sit next to the dossier as `NN-<name>.<suffix>.md` and are deleted when the step completes.
-- The user is shown the complete file as it will be written and asked for confirmation. Nothing is written before the user confirms.
+- The User is shown the complete file as it will be written and asked for confirmation. Nothing is written before the User confirms.
 
 ## 7. Decision Log
 
@@ -51,5 +66,5 @@ Conventions shared by the Systemic Context Framework skills. New skills follow t
 - When a skill finds a gap in its upstream dossiers, it does not create or update its own output dossier. It may, though, create and update working files as necessary to preserve information that's not blocked by the reported gap.
 - It writes the gap report to a dedicated file: `.ai/tasks/<task_name>/NN-<name>.overturn.md`.
 - Each gap in the report states: what is missing or contradicted, the evidence, the target dossier and section, the skill(s) to re-run (in order), and the question that skill needs to settle.
-- The skill tells the user to re-run the named skill(s) in order, passing them the report, and to only then invoke it again.
+- The skill tells the User to re-run the named skill(s) in order, passing them the report, and to only then invoke it again.
 - A run that completes successfully deletes any existing working files for its step.
