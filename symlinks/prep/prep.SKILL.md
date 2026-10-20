@@ -1,1 +1,0 @@
-../../skills/prep/SKILL.md
