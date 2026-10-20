@@ -1,1 +1,0 @@
-../../skills/prep/GRILL-BRIEF.md

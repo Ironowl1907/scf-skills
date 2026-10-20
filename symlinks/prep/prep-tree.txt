@@ -1,8 +1,0 @@
-prep
-├── assets
-│   └── brief-and-context.md
-├── references
-│   └── grilling.md
-├── GRILL-BRIEF.md
-├── GRILL-CONTEXT.md
-└── SKILL.md
