@@ -2,6 +2,10 @@
 
 Reach a **shared understanding of the task** with the user, leaving no room for ambiguity or assumptions of any kind, then write the Task Brief.
 
+## Input
+
+The resolved story. On a re-run, also the existing dossier.
+
 ## Grilling session
 
 Follow the grilling protocol, seeding the tree with these branches and expanding each one until they are all fully settled:
@@ -19,8 +23,7 @@ In the first round, also propose the `<task_name>`: `<ClickUp-ID>-<kebab-case-sl
 
 The session is done only when **no open questions and no unconfirmed assumptions remain**: every branch has been visited, every acceptance criterion is verifiable, and every assumption has been either confirmed or replaced by a decision. Unresolved items are never written down as open questions. Keep grilling until they are resolved.
 
-Then show the user how the brief file will look like and ask them to confirm it. Do not write anything until they confirm.
+Then show the user the complete dossier file as it will be written and ask them to confirm it. Do not write anything until they confirm.
 
 ## Writing the file
-
-Once the user confirms, update the dossier file: Set the Status to 'Context Pending', fill in the Task Brief section and append this session's decisions to the Decision Log. On a re-run, update the brief in place and append new decisions instead of rewriting the log. Leave the Context section untouched. Write the file's contents in the user's language.
+Once the user confirms, write the dossier at the Output File path, creating it from the Dossier Template on a first run. Set the Status to `Context Pending`, fill in the Task Brief section and append this session's decisions to the Decision Log. On a re-run, update the brief in place and append new decisions instead of rewriting the log. Leave the Context section untouched and keep the template's section headings and field labels unchanged so later steps can locate them; write all other content in the user's language.

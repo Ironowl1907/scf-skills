@@ -4,7 +4,7 @@ Settle with the user **which candidate impacts are real, and what must be done a
 
 ## Input
 
-The candidate impacts from the working file, and the Decision Logs of the input dossier and, on a re-run, of the existing output dossier. Treat every entry in either log as a settled branch.
+The candidate impacts from the candidates file, and the Decision Logs of the input dossier and, on a re-run, of the existing output dossier. Treat every entry in either log as a settled branch.
 
 ## Dispositions
 
@@ -55,8 +55,8 @@ Once the user confirms, write the output dossier from the Dossier Template:
 - Fill in every section. Record only what the task affects.
 - Number the final impacts `I1…I<n>` in severity order, and obligations `O1…On`. Cross-reference them in both directions.
 - Do not continue the Decision Log numbering from the input dossier.
-- Note down the last question ID from the input Dossier in the `Processed questions` line.
+- Record the input dossier’s last Decision Log ID in the `Processed 01-brief-and-context questions` line
 - On a re-run, update the dossier in place, keep existing IDs stable, and append new decisions instead of rewriting the log.
 - Keep the template's section headings and field labels unchanged so later steps can locate them. Write all other content in the user's language. File paths are encouraged.
 - Never modify the input dossier.
-- Do delete the working file.
+- Do delete the candidates file and overturn report, if any.
