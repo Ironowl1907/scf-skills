@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Dossier checker (Python 3.8+, standard library only).
+"""Dossier renderer (Python 3.8+, standard library only).
 
-  dossier-renderer [template.json] > dossier.md
+  dossier-renderer <template.json> > dossier.md
 
-The JSON template is the single source of truth. Exit codes: 0 ok, 1 invalid, 2 usage.
+The JSON template is the single source of truth. Exit codes: 0 ok, 2 usage.
 """
 import json
 import re
@@ -31,6 +31,16 @@ def field_example(f):
     return " | ".join(s) if isinstance(s, list) else s
 
 
+def code_hint(b):
+    """Comment describing the optional code blocks of an entry, or None."""
+    spec = b.get("code")
+    if not spec:
+        return None
+    prompt = spec.get("prompt", "code snippets") if isinstance(
+        spec, dict) else "code snippets"
+    return "<!-- %s · optional · any number of fenced blocks (``` or ~~~), any language -->" % prompt
+
+
 # ---------------------------------------------------------------- render
 
 def render(t):
@@ -55,13 +65,15 @@ def render(t):
                         hint, "", "### " + b["heading_schema"]]
                 out += ["- **%s**: %s" %
                         (f["name"], field_example(f)) for f in b["fields"]]
+                if code_hint(b):
+                    out += ["", code_hint(b)]
             else:
                 out += ["<!-- %s -->" % hint, MARKER[b["format"]] + example(b)]
     return "\n".join(out) + "\n"
 
 
 def main(args):
-    if len(args) == 0:
+    if len(args) != 1:
         print(__doc__)
         return 2
 
