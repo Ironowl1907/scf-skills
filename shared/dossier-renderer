@@ -1,0 +1,86 @@
+#!/usr/bin/env python3
+"""Dossier renderer (Python 3.8+, standard library only).
+
+  dossier-renderer <template.json> > dossier.md
+
+The JSON template is the single source of truth. Exit codes: 0 ok, 2 usage.
+"""
+import json
+import re
+import sys
+from pathlib import Path
+
+MARKER = {"string": "", "ordered_list": "1. ", "bullet_list": "- "}
+PLACEHOLDER = re.compile(r"<([^<>\n]+)>")
+
+
+def blocks(section):
+    """(subsection title or None, block) pairs for a section."""
+    if "format" in section:
+        return [(None, section)]
+    return [(sub["title"], sub) for sub in section["subsections"]]
+
+
+def example(block):
+    return block.get("item_schema") or "<%s>" % (block.get("prompt") or block["title"]).rstrip(".").lower()
+
+
+def field_example(f):
+    s = f.get("schema") or "<%s>" % (" | ".join(
+        f["options"]) if "options" in f else f.get("prompt", f["name"]))
+    return " | ".join(s) if isinstance(s, list) else s
+
+
+def code_hint(b):
+    """Comment describing the optional code blocks of an entry, or None."""
+    spec = b.get("code")
+    if not spec:
+        return None
+    prompt = spec.get("prompt", "code snippets") if isinstance(
+        spec, dict) else "code snippets"
+    return "<!-- %s · optional · any number of fenced blocks (``` or ~~~), any language -->" % prompt
+
+
+# ---------------------------------------------------------------- render
+
+def render(t):
+    out = ["---"]
+    for key, spec in t["metadata"].items():
+        if isinstance(spec, dict) and "options" in spec:
+            out.append("%s: %s  # one of: %s" % (key, spec.get(
+                "default", spec["options"][0]), " | ".join(spec["options"])))
+        else:
+            out.append("%s: <%s>" % (key, key))
+    out += ["---"]
+    for s in t["sections"]:
+        out += ["", "## " + s["title"]]
+        for sub, b in blocks(s):
+            if sub:
+                out += ["", "### " + sub]
+            hint = b["format"].replace("_", " ").replace("string", "prose")
+            hint += " · optional" if b.get(
+                "required") is False else " · required"
+            if b["format"] == "entries":
+                out += ["<!-- %s · repeat per entry -->" %
+                        hint, "", "### " + b["heading_schema"]]
+                out += ["- **%s**: %s" %
+                        (f["name"], field_example(f)) for f in b["fields"]]
+                if code_hint(b):
+                    out += ["", code_hint(b)]
+            else:
+                out += ["<!-- %s -->" % hint, MARKER[b["format"]] + example(b)]
+    return "\n".join(out) + "\n"
+
+
+def main(args):
+    if len(args) != 1:
+        print(__doc__)
+        return 2
+
+    t = json.loads(Path(args[0]).read_text(encoding="utf-8"))
+    sys.stdout.write(render(t))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))
