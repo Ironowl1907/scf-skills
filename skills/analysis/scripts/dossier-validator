@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Dossier checker (Python 3.8+, standard library only).
 
-  dossier-validator dossier.md <template.json>
+  dossier-validator <dossier.md> [template.json]
 
 The JSON template is the single source of truth. Exit codes: 0 ok, 1 invalid, 2 usage.
 """
@@ -15,6 +15,7 @@ PLACEHOLDER = re.compile(r"<([^<>\n]+)>")
 ITEM = re.compile(r"^(\d+[.)]|[-*+])\s+(.*)")
 FIELD = re.compile(r"^[-*+]\s+\*\*(.+?)\*\*:\s*(.*)")
 NONE = re.compile(r"^[_*]*(none|n/a)[_*.]*$", re.I)
+FENCE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 
 
 def blocks(section):
@@ -45,8 +46,34 @@ def schema_regex(schema):
 
 # ---------------------------------------------------------------- validate
 
+def strip_comments(line, inside):
+    """Remove <!-- --> spans from one line; return (text, still inside a comment)."""
+    out = ""
+    while True:
+        if inside:
+            end = line.find("-->")
+            if end < 0:
+                return out, True
+            line, inside = line[end + 3:], False
+        else:
+            start = line.find("<!--")
+            if start < 0:
+                return out + line, False
+            out, line, inside = out + line[:start], line[start + 4:], True
+
+
+def closes(fence, line):
+    m = FENCE.match(line)
+    return bool(m and m.group(1)[0] == fence["marker"][0]
+                and len(m.group(1)) >= len(fence["marker"]) and not m.group(2).strip())
+
+
 def parse(path):
-    """Return (metadata {key: (line, value)}, heading lines, content lines per (h2, h3))."""
+    """Return (metadata {key: (line, value)}, heading lines,
+    content lines per (h2, h3), code blocks per (h2, h3)).
+
+    Fenced code blocks (``` or ~~~, any info string or none) are opaque: nothing
+    inside them counts as a heading, field, list item, prose or comment."""
     lines = Path(path).read_text(encoding="utf-8").split("\n")
     meta, start = {}, 0
     if lines[0].strip() == "---":
@@ -59,10 +86,23 @@ def parse(path):
                 key, value = line.split(":", 1)
                 found[key.strip()] = (i, value.split(" #")
                                       [0].strip().strip("\"'"))
-    body = re.sub(r"<!--.*?-->", lambda m: "\n" *
-                  m.group().count("\n"), "\n".join(lines[start:]), flags=re.S)
-    heads, content, h2, key = {}, {}, None, None
-    for i, line in enumerate(body.split("\n"), start + 1):
+    heads, content, code = {}, {}, {}
+    h2 = key = fence = None
+    inside = False
+    for i, raw in enumerate(lines[start:], start + 1):
+        if fence:
+            if closes(fence, raw):
+                fence["closed"], fence = True, None
+            else:
+                fence["body"].append(raw)
+            continue
+        line, inside = strip_comments(raw, inside)
+        m = FENCE.match(line)
+        if m and not (m.group(1)[0] == "`" and "`" in m.group(2)):
+            fence = {"line": i, "marker": m.group(1),
+                     "body": [], "closed": False}
+            code.setdefault(key, []).append(fence)
+            continue
         m = re.match(r"^(##|###)\s+(.*?)\s*$", line)
         if m:
             if m.group(1) == "##":
@@ -72,10 +112,10 @@ def parse(path):
             content.setdefault(key, [])
         elif key and line.strip():
             content[key].append((i, line))
-    return meta, heads, content
+    return meta, heads, content, code
 
 
-def check_block(b, lines, head_line, where):
+def check_block(b, lines, fences, head_line, where):
     errors, required = [], b.get("required", True)
     names = {p.casefold() for p in PLACEHOLDER.findall(example(b))}
     items = [(i, ITEM.match(l)) for i, l in lines if ITEM.match(l)]
@@ -92,13 +132,17 @@ def check_block(b, lines, head_line, where):
         if items:
             errors.append(
                 (items[0][0], where + ": expected prose, found a list"))
-        elif not prose and required:
+        elif not prose and not fences and required:
             errors.append((head_line, where + ": is empty"))
         return errors
 
+    kind = b["format"].replace("_", " ")
     if prose:
-        errors.append((prose[0][0], "%s: expected a %s, found prose" % (
-            where, b["format"].replace("_", " "))))
+        errors.append(
+            (prose[0][0], "%s: expected a %s, found prose" % (where, kind)))
+    for f in fences:
+        errors.append(
+            (f["line"], "%s: expected a %s, found a code block" % (where, kind)))
     real = [(i, m) for i, m in items if not NONE.match(m.group(2))]
     if not real:
         if required:
@@ -118,8 +162,23 @@ def check_block(b, lines, head_line, where):
     return errors
 
 
-def check_entries(b, heads, content, title):
+def check_code(b, fences, where):
+    """Code blocks in an entry: optional, any number, any language, never empty."""
     errors = []
+    for f in fences:
+        if not b.get("code"):
+            errors.append(
+                (f["line"], "%s: code blocks are not allowed here" % where))
+        elif f["closed"] and not "".join(f["body"]).strip():
+            errors.append((f["line"], "%s: code block is empty" % where))
+    return errors
+
+
+def check_entries(b, heads, content, code, title):
+    errors = []
+    for f in code.get((title, None), []):
+        errors.append((f["line"], "%s: code block must sit inside a '### %s' entry" % (
+            title, b["heading_schema"])))
     entries = [k for k in heads if k[0] == title and k[1]]
     if not entries and b.get("required", True):
         errors.append((heads[(title, None)], "%s: needs at least one '### %s'" % (
@@ -129,6 +188,7 @@ def check_entries(b, heads, content, title):
         if PLACEHOLDER.search(key[1]) or not schema_regex(b["heading_schema"]).match(key[1]):
             errors.append(
                 (heads[key], "%s: heading does not match '%s'" % (where, b["heading_schema"])))
+        errors += check_code(b, code.get(key, []), where)
         fields = {m.group(1): (i, m.group(2).strip())
                   for i, l in content[key] if (m := FIELD.match(l))}
         for f in b["fields"]:
@@ -150,8 +210,9 @@ def check_entries(b, heads, content, title):
 
 
 def validate(t, path):
-    meta, heads, content = parse(path)
-    errors = []
+    meta, heads, content, code = parse(path)
+    errors = [(f["line"], "code block opened with '%s' is never closed" % f["marker"])
+              for fences in code.values() for f in fences if not f["closed"]]
     for key, spec in t["metadata"].items():
         line, value = meta.get(key, (1, ""))
         if not value or PLACEHOLDER.fullmatch(value):
@@ -180,9 +241,9 @@ def validate(t, path):
                     (heads[key], "heading '%s' is out of order" % (sub or title)))
             last = heads[key]
             if b["format"] == "entries":
-                errors += check_entries(b, heads, content, title)
+                errors += check_entries(b, heads, content, code, title)
             else:
-                errors += check_block(b, content[key], heads[key],
+                errors += check_block(b, content[key], code.get(key, []), heads[key],
                                       title + (" > " + sub if sub else ""))
     return sorted(errors, key=lambda e: e[0] or 0)
 
