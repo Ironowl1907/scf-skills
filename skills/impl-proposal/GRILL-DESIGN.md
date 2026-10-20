@@ -4,21 +4,20 @@ Settle with the user **every real design decision**, turn the settled design int
 
 ## Input
 
-The Draft File, and the Decision Logs of both input dossiers and, on a re-run, of the existing output dossier. Treat every entry in any of those logs, and every decision carried forward into the Draft File, as a settled branch.
+The Draft File, and the rest of the Input Data. Treat all of that data as settled branches.
 
 ## Grilling session
 
 Run **one** grilling session (it may span several rounds), following the Grilling Protocol. Seed the tree with one branch per decision in the Draft File, with the decisions others depend on (the overall approach) before those that refine it (names, shapes, placement).
 
-For each decision, ask a single question that presents the options, the evidence, and each option's consequence on the targets and impacts, and give your recommendation. The user accepts or amends it.
+For each decision, ask a single question that presents the options, the evidence, and each option's consequence, and give your recommendation. The user accepts or amends it.
 
 Keep the tree tight:
 
-- If the user proposes a new option, test it as in `DRAFT-DESIGN.md` (targets, then impacts) before adding it as a branch.
-- If the chosen option introduces an unanalyzed impact that another viable option avoids, say so with the evidence: that option is ruled out, and the user chooses among the rest.
-- If the chosen option would worsen or widen a deferred impact, say so with the evidence. If the user still chooses it, overturn.
-- If an answer can only be given by changing an input dossier, or rests on a fact that belongs in one, stop and overturn.
-- If a question drifts toward test suites, documentation, or PR text, note that it belongs to a later step and move on.
+- If the user proposes a new option, test it as in `DRAFT-DESIGN.md` before adding it as a branch.
+- If the chosen option would worsen or widen a deferred impact, say so with the evidence.
+- If an answer can only be given by changing an input dossier, or rests on a fact that belongs in one, clarify with the user. You may also suggest an overturn.
+- If a question drifts toward test suites, documentation, or PR text, drop it and move on.
 
 Update the Draft File after every round.
 
@@ -30,12 +29,11 @@ Once every decision is settled, build the proposal from the Dossier Structure.
 
 **Recipe**: one `S<n>` entry per step, listed in execution order. Step 4 executes them top to bottom.
 
-- **Depends on**: the steps that must be done first, all listed earlier, or `None`.
-- **Action**: exactly one of `Create`, `Modify`, `Delete`, or `Run`. A step that needs two actions is split into two steps.
-- **Touches**: the exact file paths and symbols. For `Create`, the new path and the symbols it defines. For `Run`, the files, data, or systems the command changes.
-- **Contract**: `Literal, below` when the step creates or changes a contract: a signature, schema, configuration key, migration, message (user-facing text, error or log format, event), file format, CLI command, or endpoint. Otherwise `None`.
+- **Action**: exactly one of `Create`, `Modify`, `Delete`, or `Run`.
+- **Touches**: the exact file paths and symbols. For `Create`, the new path and the symbols it defines. For `Run`, the files, data, or systems the command changes. `None` for steps that don't introduce changes (e.g. `cat`).
+- **Contract**: `Literal, below` when the step creates or changes a contract: a signature, schema, configuration key, migration, message (user-facing text, error or log format, event), file format, CLI command, endpoint, etc. Otherwise `None`.
 - **Behavior**: what holds once the step is done, including the edge cases the analysis raised. For `Run`, the exact command, the directory it runs from, and its expected outcome.
-- **Checks**: the ids of the checks that verify the step.
+- **Checks**: the checks that verify the step.
 
 **Literal blocks**: after a step's last field, leave a blank line and write each literal as a fenced code block indented exactly two spaces on every line, fences included. When a step has more than one literal, precede each with an indented one-line label naming its file and symbol. Give the final content of each contract as it must read after the step: the whole signature, schema, or block, never a diff. The indentation is mandatory: the Dossier Validator doesn't recognize code fences, so an unindented literal line starting with `## ` or `### ` is parsed as a heading, and every step after it silently escapes validation.
 
