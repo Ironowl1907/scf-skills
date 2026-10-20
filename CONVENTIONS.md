@@ -16,6 +16,7 @@ Conventions shared by the Systemic Context Framework skills. New skills follow t
 Good: 'Follow these guidelines' -> Agent follows guidelines.
 Bad: 'Follow these guidelines' -> 'Q1- Should I conform to guideline 1.2? What about 1.3?'
 - All dialogue with the user follows the vendored Caveman protocol included in every skill.
+- Skills have no special protocol for re-runs of any kind. It is the User's responsibility to curate what the Agent reads as they see fit. They may, however, produce material to aid the User when a re-run is necessary (see Overturn Reports).
 
 ## 1. Skill layout
 
