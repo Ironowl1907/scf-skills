@@ -4,8 +4,7 @@ Compile **all the context and reference material** needed for the task described
 
 ## Input
 
-Read the Dossier's Brief section. It must be filled in and confirmed.
-If it isn't, stop and let the user know, then abort your task.
+Read the Dossier's Task Brief section, as written by the brief grilling.
 Treat every entry already in the Decision Log as a settled branch.
 If an overturn report was passed, grill every gap in it that targets the Context.
 
@@ -25,10 +24,12 @@ Follow the grilling protocol, seeding the tree with these branches and expanding
 
 Record facts and pointers, not designs. If a question drifts toward *how* to implement the task, note that it belongs to later steps and move on.
 
-## Completion
+## Completion rule
 
 The session is done only when every branch has been settled and no open questions remain.
 
 ## Writing the file
 
-Show the user the complete dossier file as it will be written and wait for their confirmation, fill in the Dossier's Context section using the predefined structure, filling in every subsection (write "None" where something genuinely doesn't apply). Append this session's decisions to the Decision Log, and update the status line to `Completed`. On a re-run, update the Context in place and append new decisions to the Decision Log. File paths are encouraged here. Write the file's contents in the user's language, but keep the template's section headings and field labels unchanged so later steps can locate them.
+Fill in the Dossier's Context section using the predefined structure, filling in every subsection (write "None" where something genuinely doesn't apply). Append this session's decisions to the Decision Log, continuing its Q<n> numbering, and update the status line to `Completed`. File paths are encouraged here. Write the file's contents in the user's language, but keep the template's section headings and field labels unchanged so later steps can locate them.
+
+Write this completed Dossier to the Draft File and run the Validation Script on it. Do not proceed if warnings or errors are raised; iterate on the dossier structure until all validation requirements pass. Then show the user the complete dossier file as it will be written and wait for their confirmation. Once the user confirms, write it to the Output File path and delete the Draft File.
