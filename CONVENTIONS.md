@@ -1,71 +1,100 @@
 # SCF Skill Conventions
 
-Conventions shared by the Systemic Context Framework skills. New skills follow them; existing skills that deviate are updated to match.
+Conventions shared by the Systemic Context Framework skills. New skills MUST follow them; existing skills that deviate MUST be updated to match.
 
-## 0. General Observations and Philosophy
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 when, and only when, they appear in all capitals, as shown here.
 
-### Decision making:
+## Terminology
 
-- The User has every right to make any choice they see fit, regardless of the consequences. As such, the User is the only one responsible for their AI-assisted work.
-- The Agent's sole responsibility is to make sure that the User's choices and decisions, whatever they may be, are fully informed. Especially the more dangerous ones.
-- An agent must never, under any circumstances, supersede the User, even if it believes they're making a mistake.
+- **User**: the person invoking a skill.
+- **Agent**: the AI model executing a skill.
+- **Input**: the files a skill reads.
+- **Dossier**: the primary output file of a step.
+- **Gap**: missing or contradictory information in the Input.
+- **Overturn**: sending the User back to one or more earlier steps to resolve a gap.
+- **Overturn report**: the file listing the gaps behind an Overturn.
 
-### Token usage and cognitive load:
+## 0. General principles
 
-- Agents must not waste time, their own tokens or the user's cognitive energy confirming facts that can be derived from other established facts.
-Good: 'Follow these guidelines' -> Agent follows guidelines.
-Bad: 'Follow these guidelines' -> 'Q1- Should I conform to guideline 1.2? What about 1.3?'
-- All dialogue with the user follows the vendored Caveman protocol included in every skill.
-- Skills have no special protocol for re-runs of any kind. It is the User's responsibility to curate what the Agent reads as they see fit. They may, however, produce material to aid the User when a re-run is necessary (see Overturn Reports).
+### Decision making
+
+- The User MAY make any choice, whatever the consequences, and is solely responsible for their AI-assisted work.
+- Before the User decides, the Agent MUST make sure the User is fully informed. For a risky choice, the Agent MUST state the risks explicitly.
+- The Agent MUST NOT override a User's decision, even one it believes is a mistake.
+
+### Token usage and cognitive load
+
+- The Agent MUST NOT ask the User to confirm what can be derived from established facts (the Input, explicit User instructions, etc.).
+  - Good: "Follow these guidelines" -> the Agent follows them.
+  - Bad: "Follow these guidelines" -> "Should I conform to guideline 1.2? What about 1.3?"
+- All Agent output, files included, MUST follow the Caveman protocol.
+
+### Runs
+
+- Every run is a first run: a skill MUST NOT distinguish a re-run from a first run.
+- The User MAY supply any file as input, including a previously generated Dossier or Overturn report. The User MAY instead run a skill without those files base their answers on them.
+- A skill MAY produce material to help the User with a later run (see Overturning).
+
+> **Rationale**: in testing, iterative re-runs proved ineffective and a major source of hallucination.
+
+### Input
+
+- The Input is curated by the User, and may or may not contain all the necessary information that a skill needs.
+- The Input MUST be read as-is and MUST NOT be rejected by the Agent.
+- The User's own words take priority over anything and everything else (e.g. for settling gaps or amending information).
 
 ## 1. Skill layout
 
-- All skills must follow the [Agent Skills](https://agentskills.io/specification) specification.
-- The `description` states the skill's step number and name in the framework, what it takes in and produces, and ends with: "Must only be invoked manually by the User."
-- All skill files are written in English and are agent-agnostic. Optional capabilities are phrased conditionally ("If you can dispatch sub-agents, …").
+- All skills MUST follow the [Agent Skills](https://agentskills.io/specification) specification.
+- The `description` MUST state the skill's step number and name in the framework and what it takes in and produces. It MUST end with the exact sentence "Must only be invoked manually by the User."
+- All skill files MUST be written in English and MUST be agent-agnostic. Optional capabilities MUST be phrased conditionally ("If you can dispatch sub-agents, …").
 
 ## 2. `SKILL.md` as a lean orchestrator
 
-- `SKILL.md` holds only orchestration; the detailed procedures live in sub-procedure files.
-- Its sections appear in this order: **References**, **Input**, **Process**, **Overturning** (optional), **Output**.
-- The Process list ends with: "Each step is blocked until the one before it has run to completion."
-- The last Process step tells the User the output file's path, that the step is complete, and which step comes next.
+- `SKILL.md` MUST contain only orchestration; detailed procedures MUST live in sub-procedure files.
+- Its sections MUST appear in this order: **References**, **Input**, **Process**, **Overturning** (OPTIONAL), **Output**.
+- The last Process step MUST tell the User the output file's path, that the process is complete, and what to do next.
+- The Process list MUST be followed with: "Each step is blocked until the one before it has run to completion."
 
 ## 3. References section
 
-- Lists every bundled file as a relative Markdown link (sub-procedures, `references/…`, `assets/…`).
-- Lists every path the skill reads or writes under `.ai/tasks/<task_name>/` by default: input file(s), output file, and other files.
+The References section MUST list:
+
+- every bundled file (sub-procedures, references, assets, etc.) as a relative Markdown link;
+- the default path of every file the skill writes under `.ai/tasks/<task_name>/`.
 
 ## 4. Sub-procedures
 
-- Live at the skill root, named in uppercase verb-noun form (`GRILL-BRIEF.md`, `RED-TEAM.md`, `GRILL-IMPACT.md`).
-- Each contains, as applicable: **Input**, the procedure itself (e.g. **Grilling session**, **Procedure**), a **Completion** [rule], and **Writing the file**.
+- Sub-procedures MUST live at the skill root and MUST be named in uppercase verb-noun or verb-only form (`GRILL-BRIEF.md`, `RED-TEAM.md`).
+- Each sub-procedure MUST contain, in this order, as applicable: **Input**, the procedure, (e.g. **Grilling session**, **Procedure**), **Completion rule**, **Writing the file**.
 
 ## 5. Shared references
 
-- All shared references are byte-identical copies across skills. The only examples of this at the time of writing are `grilling.md` and `impact-lenses.md`
+- All shared references MUST be byte-identical copies across skills. Some examples are `grilling.md` and `impact-lenses.md`.
+- Each skill MUST only bundle the shared files it uses. This is handled automatically by a script.
+- The canonical copy lives in this repository's `shared/` folder.
 
 ## 6. Dossiers and files
 
-- The Dossiers' structure is defined in a JSON file that lives in `assets/`. A template is generated off it with a script to be filled in, and the completed Dossier is then re-validated using a different script.
-- All files for a task live in `.ai/tasks/<task_name>/`, named `NN-<name>.md`, where `NN` is the step number (`01-brief-and-context.md`, `02-analysis.md`, etc.).
-- Content may be written in the User's language of choice, but section headings and labels must stay untouched.
-- A skill never modifies another step's dossier.
-- Temporary working files sit next to the dossier as `NN-<name>.<suffix>.md` and are deleted when the step completes.
-- The User is shown the complete file as it will be written and asked for confirmation. Nothing is written before the User confirms.
+
+- Each Dossier's structure MUST be defined in a JSON file in `assets/`. A script in `scripts/` generates the blank template from it.
+- The Agent MUST run the validator script before showing the completed Dossier to the User.
+- By default, all files for a task MUST live in `.ai/tasks/<task_name>/` and MUST be named `NN-<name>[.<suffix>].md` (e.g. `02-analysis.md`, `03-impl-proposal.overturn.md`, etc.).
+- The User MAY change any output file path.
+
+- Content MAY be written in the User's language of choice; section headings and labels MUST be kept untouched.
+- Temporary working files MUST sit next to the Dossier as `NN-<name>.<suffix>.md` and MUST be deleted when the step completes. The Overturn report is not a temporary file and MUST NOT be deleted.
+- Before writing any file, the Agent MUST show the User its complete content as it will be written. The Agent MUST NOT write it until the User confirms.
+- A skill MUST NOT modify another step's files.
 
 ## 7. Decision Log
 
-- Every dossier ends with a Decision Log whose entries read `**Q<n>** — <question title>: <decision>`.
-- Each dossier restarts the numbering at Q1; it never continues an input dossier's numbering.
-- Every entry in any Decision Log a skill reads is a settled branch and is never re-asked.
-- On a re-run, the dossier is updated in place, existing IDs stay stable, and new decisions are appended rather than rewriting the log. Decisions reopened by an Overturn can be superseded, but are never overwritten or deleted.
-- A dossier that consumes others records the last question IDs it processed from them (`Processed <input dossier; e.g. 01-brief-and-context> questions through Q<n>`), so a script can detect upstream changes when on a re-run.
+- Every Dossier MUST end with a Decision Log. Each entry MUST be formatted as `**Q<n>** — <question title>: <decision>`
+- Each Dossier MUST start numbering at Q1.
 
 ## 8. Overturning
 
-- When a skill finds a gap in its upstream dossiers, it does not create or update its own output dossier. It may, though, create and update working files as necessary to preserve information that's not blocked by the reported gap.
-- It writes the gap report to a dedicated file: `.ai/tasks/<task_name>/NN-<name>.overturn.md`.
-- Each gap in the report states: what is missing or contradicted, the evidence, the target dossier and section, the skill(s) to re-run (in order), and the question that skill needs to settle.
-- The skill tells the User to re-run the named skill(s) in order, passing them the report, and to only then invoke it again.
-- A run that completes successfully deletes any existing working files for its step.
+- When the Agent finds a gap in the Input, it MAY suggest an Overturn to the User.
+- The User MAY instead settle the gap on the spot. The skill then continues normally.
+- If the User accepts the Overturn, the Agent MUST write an Overturn report to `.ai/tasks/<task_name>/NN-<name>.overturn.md` for the User to act on, and end the run.
+- For each gap, the report MUST state: what is missing or contradicted, the evidence, the skill(s) to run in order, and the question each skill needs to settle.
