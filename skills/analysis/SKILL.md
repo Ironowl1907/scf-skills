@@ -16,6 +16,7 @@ Determine what fulfilling one task **does to the system around it**, and settle 
 - [Dossier Template](assets/analysis.json)
 - [Template Generator Script](scripts/dossier_renderer)
 - [Validation Script](scripts/dossier_validator)
+- [Caveman Protocol](references/caveman.md)
 - Input File: `.ai/tasks/<task_name>/01-brief-and-context.md`
 - Output File: `.ai/tasks/<task_name>/02-analysis.md`
 - Candidates File: `.ai/tasks/<task_name>/02-analysis.candidates.md`
@@ -42,6 +43,9 @@ The user's invoking message identifies the task by `<task_name>`, by ClickUp ID/
 Do not declare Analysis complete while an overturn is pending.
 Each step is blocked until the one before it has run to completion.
 
+## Communication Style
+Strictly adhere to [Caveman Protocol](references/caveman.md) across all user interactions, questioning/grilling cycles, confirmations, and generated dossier content.
+
 ## Overturning
 
 Analysis never edits the input dossier; its gaps are fixed by re-running `prep`. Overturn when any of the following is true:
@@ -63,3 +67,4 @@ When an overturn is found:
 ## Output
 
 The output dossier at the Output File path, built from the Dossier Template and written once, at the end of `GRILL-IMPACT.md`, after the user confirms it.
+Formatted strictly in caveman style while adhering to schema constraints.
