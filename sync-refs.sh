@@ -17,3 +17,12 @@ for dest in \
     ; do
 cp -v ./shared/impact-lenses.md $dest;
 done
+
+# caveman.md
+for dest in \
+    ./skills/prep/references/ \
+    ./skills/analysis/references/ \
+    ./skills/impl-proposal/references/ \
+    ; do
+cp -v ./shared/caveman.md $dest;
+done
