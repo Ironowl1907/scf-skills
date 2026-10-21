@@ -15,6 +15,7 @@ Compile everything the later steps of the framework need to know about **one tas
 - [Dossier Template](assets/brief-and-context.json)
 - [Template Generator Script](scripts/dossier_renderer)
 - [Validation Script](scripts/dossier_validator)
+- [Caveman Protocol](references/caveman.md)
 - Input File (if the user mentions an overturn): `.ai/tasks/<task_name>/NN-<name>.overturn.md`
 - Output File: `.ai/tasks/<task_name>/01-brief-and-context.md`
 
@@ -35,8 +36,12 @@ The user's invoking message contains the task: a free-text user story, and/or a 
 6. **Validate the Dossier** using the Validation Script. Do not proceed if warnings or errors are raised; iterate on the dossier structure until all validation requirements pass.
 7. **Finish**: tell the user the file's path and that Preparation is complete, and say that the next step is Analysis & Design.
 
+## Communication Style
+Strictly adhere to [Caveman Protocol](references/caveman.md) across all user interactions, questioning/grilling cycles, confirmations, and generated dossier content.
+
 Each step is blocked until the one before it has run to completion.
 
 ## Output
 
 A dossier file under the Output File Directory, written incrementally by the two sub-skills.
+Formatted strictly in caveman style while adhering to schema constraints.
