@@ -1,0 +1,11 @@
+prep
+├── assets
+│   └── brief-and-context.json
+├── GRILL-BRIEF.md
+├── GRILL-CONTEXT.md
+├── references
+│   └── grilling.md
+├── scripts
+│   ├── dossier-renderer
+│   └── dossier-validator
+└── SKILL.md
