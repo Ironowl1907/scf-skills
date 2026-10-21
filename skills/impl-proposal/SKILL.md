@@ -16,6 +16,7 @@ Turn the user's input into a **recipe**: an ordered list of steps that an agent 
 - [Dossier Structure](assets/impl-proposal.json)
 - [Dossier Renderer](scripts/dossier-renderer)
 - [Dossier Validator](scripts/dossier-validator)
+- [Caveman Protocol](references/caveman.md)
 - Output File: `.ai/tasks/<task_name>/03-impl-proposal.md`
 - Draft File: `.ai/tasks/<task_name>/03-impl-proposal.draft.md`
 - Preview File: `.ai/tasks/<task_name>/03-impl-proposal.preview.md`
@@ -32,6 +33,9 @@ The user's invoking message details the task at hand, usually including a mix of
 3. **Read and execute `DRAFT-DESIGN.md`.** It finds the viable designs and the decisions they rest on.
 4. **Read and execute `GRILL-DESIGN.md`.** It settles every decision with the user, builds the recipe, and writes the output dossier once they confirm it.
 5. **Finish**: tell the user the output file's path, that Implementation Proposal is complete, and that the next step is Implementation.
+
+## Communication Style
+Strictly adhere to [Caveman Protocol](references/caveman.md) across all user interactions, questioning/grilling cycles, confirmations, and generated dossier content.
 
 Each step is blocked until the one before it has run to completion.
 
@@ -55,4 +59,4 @@ If the user agrees to an overturn:
 
 ## Output
 
-The output dossier at the Output File path, structured by the Dossier Structure, written once at the end of `GRILL-DESIGN.md`, after it passes the Dossier Validator and the user confirms it.
+The output dossier at the Output File path, structured by the Dossier Structure, written once at the end of `GRILL-DESIGN.md`, after it passes the Dossier Validator and the user confirms it. Formatted strictly in caveman style while adhering to schema constraints.
