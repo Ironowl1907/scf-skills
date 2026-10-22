@@ -4,7 +4,7 @@ Find **every way fulfilling the task can affect the system beyond itself**, back
 
 ## Input
 
-The validated input dossier. On a re-run, also the existing output dossier: its settled impacts stay settled unless the input changed in a way that touches them.
+The input dossier and anything else the user supplies, read as-is.
 
 ## Stance
 
@@ -22,11 +22,7 @@ You are the Red Team. Your job is to find everything that breaks, not to reassur
    The Context is a starting point, not a boundary: follow references wherever they lead. Use git history on the areas involved; past fixes there often encode invariants the task can violate. If you can dispatch sub-agents, explore lenses or directions in parallel.
 3. **Sweep every impact lens** across every element on the map.
 4. **Attack.** For each affected element, ask what happens when input is malicious, when a dependency is down, when existing data doesn't satisfy the new assumptions, who relied on the old behavior, and so on.
-5. **Qualify each candidate** using the format below. Resolve every factual uncertainty by investigating. An uncertainty that depends on a choice Step 3 will make is not a gap: record the impact as conditional on that choice. An uncertainty you cannot resolve by investigating, or one that contradicts the Input Dossier is an overturn (see Overturning).
-
-## Writing the file
-
-Write candidates to the Candidates File, one per impact. Use the Impact fields from the Dossier Template plus "**Recommendation**: your recommended disposition and, for Mitigate, the draft obligation (see Impact Grilling)."
+5. **Qualify each candidate** using the format below. Resolve every factual uncertainty by investigating. An uncertainty that depends on a choice Step 3 will make is not a gap: record the impact as conditional on that choice. An uncertainty you cannot resolve by investigating, or one that contradicts the Input Dossier is a gap (see Overturning).
 
 ## Severity scale
 
@@ -35,6 +31,10 @@ Write candidates to the Candidates File, one per impact. Use the Impact fields f
 - **Medium**: degraded but working behavior: performance, reliability, operability, or experience visibly worse.
 - **Low**: a minor or cosmetic effect with no functional consequence.
 
-## Completion
+## Completion rule
 
-When the procedure is done, hand the candidates to GRILL-IMPACT.md, unless an overturn was found.
+When the procedure is done, hand the candidates to GRILL-IMPACT.md, unless the user accepted an overturn.
+
+## Writing the file
+
+Write candidates to the Candidates File, one per impact. Use the Impact fields from the Dossier Template plus "**Recommendation**: your recommended disposition and, for Mitigate, the draft obligation (see Impact Grilling)."
