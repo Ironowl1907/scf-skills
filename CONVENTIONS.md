@@ -7,9 +7,9 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 ## Terminology
 
 - **User**: the person invoking a skill.
-- **Agent**: the AI model executing a skill.
-- **Input**: the files a skill reads.
-- **Dossier**: the primary output file of a step.
+- **Agent**: the AI model executing a skill. Skills MUST address the Agent as 'you'.
+- **Input**: all of the curated information the User provides to the Agent.
+- **Dossier**: the primary output file of a step. MUST be capitalized.
 - **Gap**: missing or contradictory information in the Input.
 - **Overturn**: sending the User back to one or more earlier steps to resolve a gap.
 - **Overturn report**: the file listing the gaps behind an Overturn.
@@ -60,8 +60,8 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 The References section MUST list:
 
-- every bundled file (sub-procedures, references, assets, etc.) as a relative Markdown link;
-- the default path of every file the skill writes under `.ai/tasks/<task_name>/`.
+- every bundled file, in order: sub-procedures, references, scripts, and assets, as relative Markdown links;
+- the default path of every file the skill writes under `.ai/tasks/<task_name>/`, in alphabetical order.
 
 ## 4. Sub-procedures
 
@@ -84,7 +84,7 @@ The References section MUST list:
 
 - Content MAY be written in the User's language of choice; section headings and labels MUST be kept untouched.
 - Temporary working files MUST sit next to the Dossier as `NN-<name>.<suffix>.md` and MUST be deleted when the step completes. The Overturn report is not a temporary file and MUST NOT be deleted.
-- Before writing any file, the Agent MUST show the User its complete content as it will be written. The Agent MUST NOT write it until the User confirms.
+- Before writing any file, the Agent SHOULD show the User its complete content as it will be written. In that case, the Agent MUST NOT write it until the User confirms. This is especially true for deliverables.
 - A skill MUST NOT modify another step's files.
 
 ## 7. Decision Log
