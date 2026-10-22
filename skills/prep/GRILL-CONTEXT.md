@@ -30,6 +30,6 @@ The session is done only when every branch has been settled and no open question
 
 ## Writing the file
 
-Fill in the Dossier's Context section using the predefined structure, filling in every subsection (write "None" where something genuinely doesn't apply). Append this session's decisions to the Decision Log, continuing its Q<n> numbering, and update the status line to `Completed`. File paths are encouraged here. Write the file's contents in the user's language, but keep the template's section headings and field labels unchanged so later steps can locate them.
+Fill in the Dossier's Context section using the predefined structure, filling in every subsection (write "None" where something genuinely doesn't apply). Append this session's decisions to the Decision Log, continuing its Q<n> numbering. File paths are encouraged here. Write the file's contents in the user's language, but keep the template's section headings and field labels unchanged so later steps can locate them.
 
 Write this completed Dossier to the Draft File and run the Validation Script on it. Do not proceed if warnings or errors are raised; iterate on the dossier structure until all validation requirements pass. Then show the user the complete dossier file as it will be written and wait for their confirmation. Once the user confirms, write it to the Output File path and delete the Draft File.

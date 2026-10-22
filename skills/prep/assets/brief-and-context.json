@@ -3,7 +3,6 @@
   "metadata": {
     "task_name": "string",
     "description": "string",
-    "status": { "type": "enum", "options": ["Pending", "Context Pending", "Completed"], "default": "Pending" }
   },
   "sections": [
     {

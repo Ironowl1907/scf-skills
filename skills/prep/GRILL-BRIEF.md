@@ -4,7 +4,7 @@ Reach a **shared understanding of the task** with the user, leaving no room for 
 
 ## Input
 
-The resolved story, plus any other file the user supplied (e.g. a previously generated dossier or an overturn report), read as-is.
+The resolved story and anything else the user supplies, read as-is.
 
 ## Grilling session
 
@@ -26,4 +26,4 @@ The session is done only when **no open questions and no unconfirmed assumptions
 Then show the user the complete dossier file as it will be written and ask them to confirm it. Do not write anything until they confirm.
 
 ## Writing the file
-Once the user confirms, write the dossier at the Output File path, creating it from the Dossier Template. Set the Status to `Context Pending`, fill in the Task Brief section and append this session's decisions to the Decision Log, starting at Q1. Leave the Context section untouched and keep the template's section headings and field labels unchanged so later steps can locate them; write all other content in the user's language.
+Once the user confirms, fill in the Task Brief sections and append this session's decisions to the Decision Log, starting at Q1. Leave the Context section and field labels untouched; write all other content in the user's language.
