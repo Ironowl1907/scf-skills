@@ -8,14 +8,22 @@
     {
       "title": "1. Design Summary",
       "format": "string",
-      "prompt": "In 2–5 sentences: the chosen design, and why it meets every acceptance criterion and obligation without worsening any deferred impact."
+      "prompt": "In 2–5 sentences: the chosen design, and why it meets every target without worsening any accepted or deferred impact."
     },
     {
-      "title": "2. Recipe",
+      "title": "2. Targets",
+      "format": "entries",
+      "heading_schema": "T<n> — <title>",
+      "fields": [
+        { "name": "Source", "prompt": "Where the Input states the target, with its id there if it has one" },
+        { "name": "Statement", "prompt": "The target, including any condition under which it applies and any verification it requires" }
+      ]
+    },
+    {
+      "title": "3. Recipe",
       "format": "entries",
       "heading_schema": "S<n> — <title>",
       "fields": [
-        { "name": "Depends on", "schema": ["None", "<step ids, e.g. S1, S2>"] },
         { "name": "Action", "options": ["Create", "Modify", "Delete", "Run"] },
         { "name": "Touches", "prompt": "Exact file paths and symbols, e.g. `src/a.py` (`parse`, `Config.load`)" },
         { "name": "Contract", "schema": ["None", "Literal, below"] },
@@ -24,17 +32,17 @@
       ]
     },
     {
-      "title": "3. Checks",
+      "title": "4. Checks",
       "format": "entries",
       "heading_schema": "V<n> — <title>",
       "fields": [
         { "name": "Method", "prompt": "Exact command or action, observable from outside the component" },
         { "name": "Expected", "prompt": "Observable result that means the check passes" },
-        { "name": "Verifies", "prompt": "Criterion or obligation ids it verifies, e.g. AC1, O2, or \"None\"" }
+        { "name": "Verifies", "prompt": "Target ids it verifies, e.g. T1, T2, or \"None\"" }
       ]
     },
     {
-      "title": "4. Certifications",
+      "title": "5. Certifications",
       "format": "entries",
       "heading_schema": "C<n> — <title>",
       "required": false,
@@ -44,14 +52,14 @@
       ]
     },
     {
-      "title": "5. Traceability",
+      "title": "6. Traceability",
       "format": "bullet_list",
-      "item_schema": "<criterion or obligation id> — Met by: <step or certification ids> — Checks: <check ids>"
+      "item_schema": "<target id> — Met by: <step or certification ids, or None> — Checks: <check ids, or None>"
     },
     {
-      "title": "6. Decision Log",
+      "title": "7. Decision Log",
       "format": "bullet_list",
-      "item_schema": "**Q<n>** — <question title>: <decision>",
+      "item_schema": "**Q<n>** — <question title>: <decision>"
     }
   ]
 }
