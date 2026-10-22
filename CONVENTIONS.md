@@ -32,7 +32,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 ### Runs
 
 - Every run is a first run: a skill MUST NOT distinguish a re-run from a first run.
-- The User MAY supply any file as input, including a previously generated Dossier or Overturn report. The User MAY instead run a skill without those files base their answers on them.
+- The User MAY supply any file as input, including a previously generated Dossier or Overturn report. The User MAY instead run a skill without those files and just base their answers on them.
 - A skill MAY produce material to help the User with a later run (see Overturning).
 
 > **Rationale**: in testing, iterative re-runs proved ineffective and a major source of hallucination.
