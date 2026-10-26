@@ -28,7 +28,6 @@
       "title": "3. Decision Log",
       "format": "bullet_list",
       "item_schema": "**Q<n>** — <question title>: <decision>",
-      "required": false
     }
   ]
 }
