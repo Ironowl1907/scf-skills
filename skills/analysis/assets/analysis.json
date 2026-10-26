@@ -7,7 +7,7 @@
     {
       "title": "1. Change Summary",
       "format": "string",
-      "prompt": "In 2–5 sentences: what fulfilling the task introduces, modifies, or removes in the system (behaviors, contracts, data, responsibilities, etc.)."
+      "prompt": "2–5 sentences: what fulfilling task introduces, modifies, or removes in system (behaviors, contracts, data, responsibilities, etc.)."
     },
     {
       "title": "2. Impact Map",
@@ -19,7 +19,7 @@
       "format": "entries",
       "heading_schema": "I<n> — <title>",
       "fields": [
-        { "name": "Lens", "prompt": "Lens from the impact lenses" },
+        { "name": "Lens", "prompt": "Lens from Impact Lenses" },
         { "name": "Severity", "options": ["Critical", "High", "Medium", "Low"] },
         { "name": "Breaking", "options": ["Yes", "No"] },
         { "name": "Condition", "prompt": "One-line explanation, or \"Unconditional\"" },
@@ -41,7 +41,7 @@
       "heading_schema": "O<n> — <title>",
       "required": false,
       "fields": [
-        { "name": "Requirements", "prompt": "What must hold, verifiable from outside the component" },
+        { "name": "Requirements", "prompt": "What must hold, verifiable from outside component" },
         { "name": "Applies", "prompt": "\"Always\", or \"Under X condition\"" },
         { "name": "Verification", "prompt": "Observable evidence that it holds" },
         { "name": "Source", "schema": "<impact ids, e.g. I1, I2>" }
@@ -50,8 +50,7 @@
     {
       "title": "5. Decision Log",
       "format": "bullet_list",
-      "item_schema": "**Q<n>** — <question title>: <decision>",
-      "required": false
+      "item_schema": "**Q<n>** — <question title>: <decision>"
     }
   ]
 }

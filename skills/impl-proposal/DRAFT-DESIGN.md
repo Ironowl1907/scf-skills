@@ -1,34 +1,46 @@
 # Implementation Proposal: Draft the Design
 
-Find **every viable way to fulfill the task**, test each one against the targets and the analysis, and list the **real decisions** the user must settle between them.
+Find **every viable way to fulfill task**. Test each against targets and Input. List **real decisions** User must settle between them.
 
 ## Input
 
-Any input dossiers, read as-is. Treat all of that data as settled branches.
+Input, read as-is. All of it: settled branches.
 
 ## Stance
 
-You are the designer, not the decider. Choices between viable designs are the user's.
+You are designer, not decider. Choices between viable designs belong to User.
 
-- Design only what the targets require, unless an acceptance criterion or obligation demands them.
-- Follow the codebase's conventions and prior art, and any you discover yourself.
-- Every claim about the system needs evidence: file paths, symbols, references, or history.
+- Design only what targets require.
+- Follow codebase conventions and prior art, including any you discover.
+- Every claim about system needs evidence: file paths, symbols, references, or history.
 
 ## Procedure
 
-1. **List the targets.** Write down every AC<n> and every O<n>, with each obligation's Applies condition and Verification. Ignore accepted or deferred impacts.
-2. **Ground the design in the system.** Follow references wherever they lead: callers, consumers, conventions, prior art, and git history if there is any. The context is a starting point, not a boundary. If you can dispatch sub-agents, explore areas in parallel. Concile conflicting information with the user.
-3. **Enumerate candidate designs.** Start from the most plausible design consistent with the conventions. Then add every other reasonable design that differs in a way that matters: contracts, data, files touched, dependencies, etc.
-4. **Test every candidate.** Can the candidate meet all the specified requirements? Does it introduce new problems, according to the Impact Lenses? The answer to those questions determines the candidate's quality.
-5. **Sort.** Highest quality candidates go first, and the worst candidates are dropped outright.
-6. **List the real decisions.** Decisions with more than one viable option, where the choice changes something observable, or something a reviewer would care about: an approach, a contract's shape, a name others depend on, a file's placement, a dependency, etc. For each one, record the options, the evidence, the consequence of each, and your recommendation.
+1. **List targets and constraints.** Write every target Input states (acceptance criteria, obligations, etc.). Give each its applying condition and required verification, if any. Number them `T<n>`. Note where Input states each one, plus its id there if it has one. Then list every impact Input accepts or defers as constraint: design SHOULD NOT worsen it.
+2. **Ground design in system.** Follow references wherever they lead: callers, consumers, conventions, prior art, git history if any. Input is starting point, not boundary. Can dispatch sub-agents? Explore areas in parallel. Reconcile conflicting information with User.
+3. **Enumerate candidate designs.** Start from most plausible design consistent with conventions. Then add every other reasonable design that differs in a way that matters: contracts, data, files touched, dependencies, etc.
+4. **Test every candidate.** Can it meet every target? Does it worsen any constraint? Does it introduce new problems per Impact Lenses? Answers set candidate quality.
+5. **Sort.** Highest quality first. Drop unviable candidates outright. Every remaining candidate worsens same constraint? Tell User, with evidence.
+6. **List real decisions.** Real decision: more than one viable option, and choice changes something observable or something a reviewer cares about. Examples: approach, contract shape, name others depend on, file placement, dependency. For each: record options, evidence, consequence of each option, and your recommendation.
 
-Resolve every factual uncertainty by investigating. An uncertainty you cannot resolve by investigating is a non-discoverable fact missing from `01-brief-and-context.md`: suggest an overturn.
+Resolve every factual uncertainty by investigating. Investigation cannot resolve it? It is a non-discoverable fact missing from Input: suggest Overturn.
 
-## Completion
+## Completion rule
 
-Drafting is done when every target has at least one path to being met or is certified in some remaining candidate, every real decision is listed with a recommendation, and no factual uncertainty remains. Hand over to `GRILL-DESIGN.md`.
+Drafting done only when all hold:
+- every target has at least one path to met or certified, in some remaining candidate
+- every real decision listed, with recommendation
+- no factual uncertainty remains
+
+Then hand over to `GRILL-DESIGN.md`.
 
 ## Writing the file
 
-Write your working notes to the Draft File, and keep it current as you go. It is a free-form working file, not validated, with these parts: Facts (each with evidence), Targets (each with how it can be met or certified), Candidates (do delete dropped candidates, though), and Decisions (each with options and a recommendation). Write it in the user's language.
+Write working notes to Draft File. Keep it current as you go. Overwrite any file already at that path. Free-form working file, not validated. Parts:
+- Facts: each with evidence.
+- Targets: each `T<n>` with source and how it can be met or certified.
+- Constraints.
+- Candidates: delete dropped ones.
+- Decisions: each with options and recommendation.
+
+Write it in User's language.

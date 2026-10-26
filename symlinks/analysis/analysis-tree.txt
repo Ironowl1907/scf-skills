@@ -1,9 +1,0 @@
-analysis
-├── assets
-│   └── analysis.md
-├── references
-│   ├── grilling.md
-│   └── impact-lenses.md
-├── GRILL-IMPACT.md
-├── RED-TEAM.md
-└── SKILL.md

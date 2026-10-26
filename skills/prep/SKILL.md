@@ -1,42 +1,41 @@
 ---
 name: prep
-description: Step 1 (Preparation) of the team's 8-step AI collaboration framework. Takes in a task and interviews the user to produce a confirmed task brief and context/reference dossier. Must only be invoked manually by the user.
+description: Step 1 (Preparation) of the team's 8-step AI collaboration framework. Takes in a task and interviews the User to produce a confirmed task brief and context/reference Dossier. Must only be invoked manually by the User.
 ---
 
 # Prep
 
-Compile everything the later steps of the framework need to know about **one task**: a shared understanding of what the task is, and the context and reference material needed to do it. Preparation records *what* and *with what*, never *how*. Do not propose designs, implementations, or tests; those belong to later steps.
+Compile what later framework steps need about **one task**: shared understanding of task, plus context and reference material to do it. Record *what* and *with what*. Never *how*. No designs, implementations, or tests: later steps own those.
 
 ## References
 
 - [Brief Grilling](GRILL-BRIEF.md)
 - [Context Grilling](GRILL-CONTEXT.md)
 - [Grilling Protocol](references/grilling.md)
-- [Dossier Template](assets/brief-and-context.json)
-- [Template Generator Script](scripts/dossier_renderer)
-- [Validation Script](scripts/dossier_validator)
-- Input File (if the user mentions an overturn): `.ai/tasks/<task_name>/NN-<name>.overturn.md`
+- [Caveman Protocol](references/caveman.md)
+- [Dossier Renderer](scripts/dossier-renderer)
+- [Dossier Validator](scripts/dossier-validator)
+- [Dossier Structure](assets/impl-proposal.json)
+- Draft File: `.ai/tasks/<task_name>/01-brief-and-context.draft.md`
 - Output File: `.ai/tasks/<task_name>/01-brief-and-context.md`
 
 ## Input
 
-The user's invoking message contains the task: a free-text user story, and/or a ClickUp task ID/URL:
-- **ClickUp ID/URL**: if a ClickUp tool is available, fetch the task (title, description, acceptance criteria, comments, linked tasks, attachments). If no ClickUp tool is available, say which tool is missing, ask the user to paste the story, and continue from the pasted text. Never guess a ticket's contents.
-- **Free text**: a document or paragraph(s). Use as-is.
-- **Overturn report**: if the user passes a downstream step's overturn report, read it. Every gap that targets this skill's dossier must be settled in this run.
+Invoking message holds task: free-text user story, ClickUp task ID/URL, or both.
+- **ClickUp ID/URL**: ClickUp tool available? Fetch task: title, description, acceptance criteria, comments, linked tasks, attachments. No ClickUp tool? Name missing tool. Ask User to paste story. Continue from pasted text. Never guess ticket contents.
+- **Free text and other files**: documents, paragraphs, any other material. Use as-is.
 
 ## Process
 
-1. **Resolve the input** as described above.
-2. **Generate the Dossier template** by using the Template Generator Script.
-3. **Check for an existing dossier file** matching this task (same ClickUp ID or same slug). If one exists, this is a re-run: read it, and treat every entry in its Decision Log as a settled branch. Only grill what is missing or what the user says has changed.
-4. **Read and execute the brief grilling** with the resolved story. It proposes the `<task_name>`, creates the file, and writes the Task Brief once the user confirms it.
-5. **Read and execute the context grilling** on the same task. It writes the Context section once the user confirms it.
-6. **Validate the Dossier** using the Validation Script. Do not proceed if warnings or errors are raised; iterate on the dossier structure until all validation requirements pass.
-7. **Finish**: tell the user the file's path and that Preparation is complete, and say that the next step is Analysis & Design.
+Follow Caveman Protocol strictly in all User interaction, grilling cycles, confirmations, and Dossier content.
 
-Each step is blocked until the one before it has run to completion.
+1. **Resolve Input** per Input section.
+2. **Read and run brief grilling** on resolved story. It proposes `<task_name>`, creates Draft File, fills Task Brief after User confirms.
+3. **Read and run context grilling** on same task. It validates completed Dossier with Validation Script, then writes Context section after User confirms.
+4. **Finish**: give User file path. Say Preparation complete. Next step: Analysis & Design.
+
+Each step blocked until previous step completes.
 
 ## Output
 
-A dossier file under the Output File Directory, written incrementally by the two sub-skills.
+Dossier file in Output File directory. Two sub-procedures write it incrementally. Format: strict caveman style, within schema constraints.

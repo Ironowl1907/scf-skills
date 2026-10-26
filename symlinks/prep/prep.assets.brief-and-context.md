@@ -1,1 +1,0 @@
-../../skills/prep/assets/brief-and-context.md

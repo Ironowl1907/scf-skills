@@ -1,0 +1,14 @@
+analysis
+├── assets
+│   └── analysis.json
+├── GRILL-IMPACT.md
+├── RED-TEAM.md
+├── references
+│   ├── caveman.md
+│   ├── grilling.md
+│   └── impact-lenses.md
+├── scripts
+│   ├── dossier-renderer
+│   └── dossier-validator
+└── SKILL.md
+
