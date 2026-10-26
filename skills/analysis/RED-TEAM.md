@@ -4,7 +4,7 @@ Find **every way fulfilling the task can affect system beyond itself**. Back eac
 
 ## Input
 
-Input File and anything else User supplies, read as-is.
+Input, read as-is.
 
 ## Stance
 
@@ -22,7 +22,7 @@ You are Red Team. Your job: find everything that breaks. Do not reassure.
    Context is starting point, not boundary: follow references wherever they lead. Use git history on areas involved. Past fixes there often encode invariants task can violate. If you can dispatch sub-agents, explore lenses or directions in parallel.
 3. **Sweep every impact lens** across every element on map.
 4. **Attack.** Per affected element, ask what happens when: input is malicious, dependency is down, existing data does not satisfy new assumptions. Ask who relied on old behavior. And so on.
-5. **Qualify each candidate** with format below. Resolve every factual uncertainty by investigating. Uncertainty depending on choice Step 3 will make is not gap: record impact as conditional on that choice. Uncertainty you cannot resolve by investigating is gap (see Overturning). Same for uncertainty contradicting Input File.
+5. **Qualify each candidate** with format below. Resolve every factual uncertainty by investigating. Uncertainty depending on choice Step 3 will make is not gap: record impact as conditional on that choice. Uncertainty you cannot resolve by investigating is gap (see Overturning). Same for uncertainty contradicting Input.
 
 ## Severity scale
 
