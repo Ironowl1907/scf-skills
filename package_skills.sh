@@ -1,3 +1,5 @@
+./sync-refs.sh
+
 cd ./skills
 
 for skill in *; do

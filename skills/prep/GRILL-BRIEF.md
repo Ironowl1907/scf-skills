@@ -1,29 +1,35 @@
 # Prep: Grill the Task
 
-Reach a **shared understanding of the task** with the user, leaving no room for ambiguity or assumptions of any kind, then write the Task Brief.
+Goal: **shared understanding of task** with User. Zero ambiguity, zero assumptions. Then write Task Brief.
 
 ## Input
 
-The resolved story and anything else the user supplies, read as-is.
+Resolved story plus anything User supplies. Read as-is.
 
 ## Grilling session
 
-Follow the grilling protocol, seeding the tree with these branches and expanding each one until they are all fully settled:
+Follow grilling protocol. Seed tree with these branches. Expand each until all fully settled:
 
-1. **Problem and who has it**: whose problem this is, and why it matters now.
-2. **Expected outcome**: what "done" looks like, from the end user's perspective.
-3. **Acceptance criteria**: each one concrete and verifiable. Rewrite vague criteria ("should be fast", "handle errors") until they are measurable or observable.
-4. **Scope boundaries**: what is explicitly in scope and what is out of scope.
-5. **Dependencies and blockers**: other tasks, teams, services, or decisions this task relies on.
-6. **Ambiguities in the story's wording**: terms, actors, or behaviors the story leaves open to more than one interpretation.
+1. **Problem and who has it**: whose problem, why it matters now.
+2. **Expected outcome**: what "done" looks like for end user.
+3. **Acceptance criteria**: each concrete, verifiable. Rewrite vague criteria ("should be fast", "handle errors") until measurable or observable.
+4. **Scope boundaries**: what is explicitly in scope, what is out.
+5. **Dependencies and blockers**: other tasks, teams, services, decisions this task relies on.
+6. **Ambiguities in story wording**: terms, actors, behaviors open to more than one interpretation.
 
-In the first round, also propose the `<task_name>`: `<ClickUp-ID>-<kebab-case-slug>` when there is a ticket, otherwise just `<kebab-case-slug>`.
+First round: also propose short `<task_name>`. Ticket exists: `<ClickUp-ID>-<kebab-case-slug>`. No ticket: `<kebab-case-slug>` only.
 
 ## Completion rule
 
-The session is done only when **no open questions and no unconfirmed assumptions remain**: every branch has been visited, every acceptance criterion is verifiable, and every assumption has been either confirmed or replaced by a decision. Unresolved items are never written down as open questions. Keep grilling until they are resolved.
+Session done only when **no open questions and no unconfirmed assumptions remain**:
+- every branch visited
+- every acceptance criterion verifiable
+- every assumption confirmed or replaced by decision
 
-Then show the user the complete dossier file as it will be written and ask them to confirm it. Do not write anything until they confirm.
+Never write unresolved items as open questions. Keep grilling until resolved.
+
+Then show User Dossier file exactly as it will be written. Ask User to confirm. Write nothing before confirmation.
 
 ## Writing the file
-Once the user confirms, fill in the Task Brief sections and append this session's decisions to the Decision Log, starting at Q1. Leave the Context section and field labels untouched; write all other content in the user's language.
+
+User confirms: Generate Draft File with Template Generator Script. Fill Task Brief sections. Append session decisions to Decision Log, starting at Q1. Leave Context section and field labels untouched. Write all other content in User's language.
