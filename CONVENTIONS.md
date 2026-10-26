@@ -54,7 +54,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 - `SKILL.md` MUST contain only orchestration; detailed procedures MUST live in sub-procedure files.
 - Its sections MUST appear in this order: **References**, **Input**, **Process**, **Overturning** (OPTIONAL), **Output**.
 - The last Process step MUST tell the User the output file's path, that the process is complete, and what to do next.
-- The Process list MUST be followed with: "Each step is blocked until the one before it has run to completion."
+- The Process list MUST be followed with: "Each step blocked until previous step completes."
 
 ## 3. References section
 

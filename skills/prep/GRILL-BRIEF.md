@@ -1,10 +1,10 @@
 # Prep: Grill the Task
 
-Goal: **shared understanding of task** with user. Zero ambiguity, zero assumptions. Then write Task Brief.
+Goal: **shared understanding of task** with User. Zero ambiguity, zero assumptions. Then write Task Brief.
 
 ## Input
 
-Resolved story plus anything user supplies. Read as-is.
+Resolved story plus anything User supplies. Read as-is.
 
 ## Grilling session
 
@@ -28,8 +28,8 @@ Session done only when **no open questions and no unconfirmed assumptions remain
 
 Never write unresolved items as open questions. Keep grilling until resolved.
 
-Then show user complete dossier file exactly as it will be written. Ask user to confirm. Write nothing before confirmation.
+Then show User Dossier file exactly as it will be written. Ask User to confirm. Write nothing before confirmation.
 
 ## Writing the file
 
-User confirms: fill Task Brief sections. Append session decisions to Decision Log, starting at Q1. Leave Context section and field labels untouched. Write all other content in user's language.
+User confirms: Generate Draft File with Template Generator Script. Fill Task Brief sections. Append session decisions to Decision Log, starting at Q1. Leave Context section and field labels untouched. Write all other content in User's language.
