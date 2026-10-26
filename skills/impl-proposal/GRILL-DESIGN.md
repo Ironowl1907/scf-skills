@@ -62,7 +62,7 @@ Keep working until all hold:
 3. **Every step has at least one check.** Every check's Method observable from outside component.
 4. **No step leaves a choice open.** Prohibited wording: "e.g.", "as appropriate", "optionally", "consider", "TBD".
 5. **Recipe followable by both agent and human developer.**
-6. **Every target traces.** Every target traced to from at least one step's Check, unless User declined Overturn for it.
+6. **Every target traces.** Every target verified by at least one Check, unless User declined Overturn for it.
 
 Then write proposal to Preview File. Validate it (see below). Show User complete Dossier exactly as it will be written. Ask User to confirm. Write nothing to Output File before confirmation.
 
@@ -73,4 +73,4 @@ Run scripts with skill directory as working directory. Both need Python 3.8+, st
 1. **Render template**: `python3 scripts/dossier-renderer assets/impl-proposal.json`. Fill it in at Preview File. Overwrite any file already at that path. Keep unchanged: section headings, field labels, fixed values `None`, `Literal, below`, `Create`, `Modify`, `Delete`, `Run`. Write all other content in User's language. Remove template comments.
 2. **Validate**: `python3 scripts/dossier-validator <Preview File> assets/impl-proposal.json`. Fix every error. Re-run until exit 0. Validator checks structure only. Completion rule checks stay yours.
 3. **Write**: User confirms? Move Preview File to Output File path.
-4. **Clean up**: delete Draft File, plus Preview File if it remains. Never delete Overturn Report or Session Save File. Never modify any Input file.
+4. **Clean up**: delete Draft File, plus Preview File if it remains. Never delete Overturn Report. Never modify any Input file.

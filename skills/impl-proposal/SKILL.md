@@ -11,12 +11,12 @@ Turn Input into **recipe**: ordered steps an agent or human developer follows to
 
 - [Design Drafting](DRAFT-DESIGN.md)
 - [Design Grilling](GRILL-DESIGN.md)
+- [Caveman Protocol](references/caveman.md)
 - [Grilling Protocol](references/grilling.md)
 - [Impact Lenses](references/impact-lenses.md)
-- [Dossier Structure](assets/impl-proposal.json)
 - [Dossier Renderer](scripts/dossier-renderer)
 - [Dossier Validator](scripts/dossier-validator)
-- [Caveman Protocol](references/caveman.md)
+- [Dossier Structure](assets/impl-proposal.json)
 - Draft File: `.ai/tasks/<task_name>/03-impl-proposal.draft.md`
 - Output File: `.ai/tasks/<task_name>/03-impl-proposal.md`
 - Overturn Report: `.ai/tasks/<task_name>/03-impl-proposal.overturn.md`
@@ -33,9 +33,9 @@ Invoking message holds task: usually acceptance criteria, scope boundaries, thin
 
 Follow Caveman Protocol in every User interaction and every file written.
 
-1. **Read input** per Input section.
+1. **Read Input** per Input section.
 2. **Read and run `DRAFT-DESIGN.md`.** Finds viable designs and decisions they rest on.
-3. **Read and run `GRILL-DESIGN.md`.** Settles every decision with User, builds recipe, writes output dossier after User confirms.
+3. **Read and run `GRILL-DESIGN.md`.** Settles every decision with User, builds recipe, writes output Dossier after User confirms.
 4. **Finish**: give User output file path. Say Implementation Proposal complete. Next step: Implementation.
 
 Each step blocked until previous step completes.
@@ -65,4 +65,4 @@ User accepts Overturn:
 
 ## Output
 
-Output dossier at Output File path. Structure: Dossier Structure. Written once, at end of `GRILL-DESIGN.md`, after it passes Dossier Validator and User confirms. Format: caveman style, within schema constraints.
+Output Dossier at Output File path. Structure: Dossier Structure. Written once, at end of `GRILL-DESIGN.md`, after it passes Dossier Validator and User confirms. Format: caveman style, within schema constraints.

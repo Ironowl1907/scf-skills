@@ -20,7 +20,7 @@ You are designer, not decider. Choices between viable designs belong to User.
 2. **Ground design in system.** Follow references wherever they lead: callers, consumers, conventions, prior art, git history if any. Input is starting point, not boundary. Can dispatch sub-agents? Explore areas in parallel. Reconcile conflicting information with User.
 3. **Enumerate candidate designs.** Start from most plausible design consistent with conventions. Then add every other reasonable design that differs in a way that matters: contracts, data, files touched, dependencies, etc.
 4. **Test every candidate.** Can it meet every target? Does it worsen any constraint? Does it introduce new problems per Impact Lenses? Answers set candidate quality.
-5. **Sort.** Highest quality first. Drop worst candidates outright. Every remaining candidate worsens same constraint? Tell User, with evidence.
+5. **Sort.** Highest quality first. Drop unviable candidates outright. Every remaining candidate worsens same constraint? Tell User, with evidence.
 6. **List real decisions.** Real decision: more than one viable option, and choice changes something observable or something a reviewer cares about. Examples: approach, contract shape, name others depend on, file placement, dependency. For each: record options, evidence, consequence of each option, and your recommendation.
 
 Resolve every factual uncertainty by investigating. Investigation cannot resolve it? It is a non-discoverable fact missing from Input: suggest Overturn.
