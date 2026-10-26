@@ -4,7 +4,7 @@ Settle with User **which candidate impacts are real, and what must be done about
 
 ## Input
 
-Candidate impacts from Candidates File, plus Decision Log of Input File. Treat every entry in it as settled branch.
+Candidate impacts from Candidates File, plus Input. Treat every Decision Log entry in Input as settled branch.
 
 ## Dispositions
 
@@ -57,9 +57,9 @@ Fill in Draft File, generated from Dossier Template:
 
 - Fill in every section. Record only what task affects.
 - Number final impacts `I1…I<n>` in severity order, obligations `O1…On`. Cross-reference them in both directions.
-- Start Decision Log at Q1. Do not continue Decision Log numbering from Input File.
+- Start Decision Log at Q1. Do not continue Decision Log numbering from Input.
 - Keep template section headings and field labels unchanged, so later steps can locate them. Write all other content in User's language. File paths encouraged.
-- Never modify Input File.
+- Never modify Input files.
 
 Run Validation Script on Draft File. Warnings or errors raised? Do not proceed. Iterate on Dossier structure until all validation requirements pass. Then show User complete Dossier as it will be written. Ask User to confirm it. Do not write anything until User confirms.
 
