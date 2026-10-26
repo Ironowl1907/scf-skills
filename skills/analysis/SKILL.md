@@ -11,12 +11,12 @@ Find what fulfilling one task **does to system around it**. Settle with User **w
 
 - [Red-Team Procedure](RED-TEAM.md)
 - [Impact Grilling](GRILL-IMPACT.md)
-- [Impact Lenses](references/impact-lenses.md)
-- [Grilling Protocol](references/grilling.md)
 - [Caveman Protocol](references/caveman.md)
-- [Template Generator Script](scripts/dossier-renderer)
-- [Validation Script](scripts/dossier-validator)
-- [Dossier Template](assets/analysis.json)
+- [Grilling Protocol](references/grilling.md)
+- [Impact Lenses](references/impact-lenses.md)
+- [Dossier Renderer](scripts/dossier-renderer)
+- [Dossier Validator](scripts/dossier-validator)
+- [Dossier Structure](assets/impl-proposal.json)
 - Candidates File: `.ai/tasks/<task_name>/02-analysis.candidates.md`
 - Draft File: `.ai/tasks/<task_name>/02-analysis.draft.md`
 - Output File: `.ai/tasks/<task_name>/02-analysis.md`

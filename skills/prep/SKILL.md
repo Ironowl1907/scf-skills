@@ -13,9 +13,9 @@ Compile what later framework steps need about **one task**: shared understanding
 - [Context Grilling](GRILL-CONTEXT.md)
 - [Grilling Protocol](references/grilling.md)
 - [Caveman Protocol](references/caveman.md)
-- [Template Generator Script](scripts/dossier-renderer)
-- [Validation Script](scripts/dossier-validator)
-- [Dossier Template](assets/brief-and-context.json)
+- [Dossier Renderer](scripts/dossier-renderer)
+- [Dossier Validator](scripts/dossier-validator)
+- [Dossier Structure](assets/impl-proposal.json)
 - Draft File: `.ai/tasks/<task_name>/01-brief-and-context.draft.md`
 - Output File: `.ai/tasks/<task_name>/01-brief-and-context.md`
 
