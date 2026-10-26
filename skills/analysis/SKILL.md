@@ -1,6 +1,6 @@
 ---
 name: analysis
-description: Step 2 (Analysis & Design) of team's 8-step AI collaboration framework. Takes task Dossier from Step 1 (prep). Red-teams every impact the task has on rest of system. Interviews User on what must be done about each impact, and why. Produces analysis Dossier for Step 3. Must only be invoked manually by the User.
+description: Step 2 (Analysis & Design) of team's 8-step AI collaboration framework. Takes curated Input. Red-teams every impact the task has on rest of system. Interviews User on what must be done about each impact, and why. Produces analysis Dossier for Step 3. Must only be invoked manually by the User.
 ---
 
 # Analysis
@@ -13,30 +13,28 @@ Find what fulfilling one task **does to system around it**. Settle with User **w
 - [Impact Grilling](GRILL-IMPACT.md)
 - [Impact Lenses](references/impact-lenses.md)
 - [Grilling Protocol](references/grilling.md)
-- [Dossier Template](assets/analysis.json)
+- [Caveman Protocol](references/caveman.md)
 - [Template Generator Script](scripts/dossier-renderer)
 - [Validation Script](scripts/dossier-validator)
-- [Caveman Protocol](references/caveman.md)
-- Input File: `.ai/tasks/<task_name>/01-brief-and-context.md`
-- Output File: `.ai/tasks/<task_name>/02-analysis.md`
-- Draft File: `.ai/tasks/<task_name>/02-analysis.draft.md`
+- [Dossier Template](assets/analysis.json)
 - Candidates File: `.ai/tasks/<task_name>/02-analysis.candidates.md`
+- Draft File: `.ai/tasks/<task_name>/02-analysis.draft.md`
+- Output File: `.ai/tasks/<task_name>/02-analysis.md`
 - Overturn Report: `.ai/tasks/<task_name>/02-analysis.overturn.md`
 
 ## Input
 
-User's invoking message names task by `<task_name>`, ClickUp ID/URL, or Input File path.
+Curated info User provides: text and/or files (e.g. `.ai/tasks/<task_name>/01-brief-and-context.md`, previous Dossier, Overturn Report).
 
-- Resolve it to exactly one Input File under `.ai/tasks/`. ClickUp ID: match directory whose name starts with that ID. Nothing matches, or more than one? List findings and ask. Never guess.
-- Read Input File as-is, whatever its state. Missing or contradictory info in it is a gap (see Overturning).
-- Read whole Input File. Every entry in its Decision Log is settled branch: never re-ask it.
-- Read any other file User supplies as-is, like rest of Input. Example: previous Dossier or Overturn Report.
+- Read Input as-is, whatever its state. Never reject it. Missing or contradictory info in it is a gap (see Overturning).
+- User's own words take priority over everything else.
+- Every Decision Log entry in Input is settled branch: never re-ask it.
 
 ## Process
 
 Strictly follow Caveman Protocol in all User interaction, grilling rounds, confirmations, and Dossier content.
 
-1. **Resolve and read Input** as above.
+1. **Read Input** as above.
 2. **Generate Draft File** with Template Generator Script.
 3. **Read and execute `RED-TEAM.md`.** It produces candidate impacts.
 4. **Read and execute `GRILL-IMPACT.md`.** It settles every candidate with User and validates Dossier with Validation Script. It writes Output File once User confirms.
@@ -47,7 +45,7 @@ Do not declare Analysis complete while overturn is pending.
 
 ## Overturning
 
-Analysis never edits Input File. Re-running `prep` fixes its gaps. You may suggest Overturn when any of these is true:
+Analysis never edits Input. User settles gaps on the spot or by re-running `prep`. You may suggest Overturn when any of these is true:
 
 1. **Task Brief is ambiguous or contradictory**: different readings yield materially different impacts.
 2. **Settling an impact would change Task Brief**: add, remove, or alter acceptance criterion, expected outcome, or scope boundary.
@@ -71,7 +69,7 @@ Gap found:
    - skill(s) to run, in order;
    - question each skill must settle.
 
-   Show User complete report as it will be written. Write it only after User confirms.
+   Show User complete report as it will be written. Write it only after User confirms. Delete Draft File and Candidates File, if any.
 4. Tell User: re-run `prep` for this task with that report, and only then invoke `analysis` again. End run.
 
 ## Output
