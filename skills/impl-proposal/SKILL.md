@@ -1,62 +1,68 @@
 ---
 name: impl-proposal
-description: Step 3 (Implementation Proposal) of the team's 8-step AI collaboration framework. Drafts an implementation design, settles each decision with the user, and produces a step-by-step implementation recipe that Step 4 can follow. Must only be invoked manually by the user.
+description: Step 3 (Implementation Proposal) of the team's 8-step AI collaboration framework. Takes in the curated Input, drafts an implementation design, settles each decision with the User, and produces a step-by-step implementation recipe that Step 4 can follow. Must only be invoked manually by the User.
 ---
 
 # Implementation Proposal
 
-Turn the user's input into a **recipe**: an ordered list of steps that an agent or a human developer can follow to the letter without making any decision. The proposal settles **how** the task is done. Never **what** the task is or **which** consequences to address. That is the user's job to decide.
+Turn Input into **recipe**: ordered steps an agent or human developer follows to the letter, no decisions left. Proposal settles **how** task is done. Never **what** task is, never **which** consequences to address. User decides those.
 
 ## References
 
 - [Design Drafting](DRAFT-DESIGN.md)
 - [Design Grilling](GRILL-DESIGN.md)
+- [Caveman Protocol](references/caveman.md)
 - [Grilling Protocol](references/grilling.md)
 - [Impact Lenses](references/impact-lenses.md)
-- [Dossier Structure](assets/impl-proposal.json)
 - [Dossier Renderer](scripts/dossier-renderer)
 - [Dossier Validator](scripts/dossier-validator)
-- [Caveman Protocol](references/caveman.md)
-- Output File: `.ai/tasks/<task_name>/03-impl-proposal.md`
+- [Dossier Structure](assets/impl-proposal.json)
 - Draft File: `.ai/tasks/<task_name>/03-impl-proposal.draft.md`
-- Preview File: `.ai/tasks/<task_name>/03-impl-proposal.preview.md`
+- Output File: `.ai/tasks/<task_name>/03-impl-proposal.md`
 - Overturn Report: `.ai/tasks/<task_name>/03-impl-proposal.overturn.md`
+- Preview File: `.ai/tasks/<task_name>/03-impl-proposal.preview.md`
 
 ## Input
 
-The user's invoking message details the task at hand, usually including a mix of acceptance criteria, scope boundaries, things to look out for and dangers to prevent. You must take the input as-is, whatever it's state may be. The user is able to clarify when information is missing or wrong, so do ask only the most important questions if you find it necessary, but never re-ask anything that you can find out from the input or its references.
+Invoking message holds task: usually acceptance criteria, scope boundaries, things to watch, dangers to prevent.
+- Take Input as-is, whatever its state.
+- Info missing or wrong? User can clarify. Ask only most important questions, only if needed.
+- Never ask what Input or its references already answer.
 
 ## Process
 
-1. **Resolve and read the input** as described above.
-2. **Delete existing working files and output**: They are likely from an older run and will contaminate the context.
-3. **Read and execute `DRAFT-DESIGN.md`.** It finds the viable designs and the decisions they rest on.
-4. **Read and execute `GRILL-DESIGN.md`.** It settles every decision with the user, builds the recipe, and writes the output dossier once they confirm it.
-5. **Finish**: tell the user the output file's path, that Implementation Proposal is complete, and that the next step is Implementation.
+Follow Caveman Protocol in every User interaction and every file written.
 
-## Communication Style
-Strictly adhere to [Caveman Protocol](references/caveman.md) across all user interactions, questioning/grilling cycles, confirmations, and generated dossier content.
+1. **Read Input** per Input section.
+2. **Read and run `DRAFT-DESIGN.md`.** Finds viable designs and decisions they rest on.
+3. **Read and run `GRILL-DESIGN.md`.** Settles every decision with User, builds recipe, writes output Dossier after User confirms.
+4. **Finish**: give User output file path. Say Implementation Proposal complete. Next step: Implementation.
 
-Each step is blocked until the one before it has run to completion.
+Each step blocked until previous step completes.
 
 ## Overturning
 
-This skill never corrects its input; gaps are fixed by the user by optionally re-running the previous skills. You may suggest an Overturn in the following cases:
+Skill never corrects its Input. User settles every gap: on the spot, or by re-running earlier steps. Overturn may be suggested when:
 
-1. **Gap in the task's brief and/or context**: A key piece of information is missing, ambiguous, contradictory, or contradicted by the system, in a way that changes the design. Also when an acceptance criterion can be neither met nor certified.
-2. **Gap in the analysis**: a key impact or obligation is missing, ambiguous, or contradicted by the system, in a way that changes the design.
-3. **Unmeetable obligation**: an obligation can be neither met nor certified with evidence. This also holds if, for example, the obligation conflicts with an acceptance criterion or a scope boundary.
-4. **Unavoidable unanalyzed impact**: every viable design introduces the same unanalyzed impact. If some viable design avoids it, choose that design instead; that is not an overturn.
+1. **Gap in Input**: key info missing, ambiguous, contradictory, or contradicted by system, and it changes design.
+2. **Unmeetable target**: target can be neither met nor certified with evidence. Includes target conflicting with another target or with scope boundary.
+3. **Unavoidable unanalyzed impact**: every viable design introduces same impact, and Input does not account for it. Some viable design avoids it? Prefer that design. Not an Overturn.
 
-Distinguish overturns from ordinary work: facts about the codebase are yours to find; choices between viable designs are the user's decisions in `GRILL-DESIGN.md`; only missing or wrong information in the input data is an overturn. The user always has the final say in this.
+Overturn vs ordinary work:
+- Codebase facts: yours to find.
+- Choices between viable designs: User decides in `GRILL-DESIGN.md`.
+- Only missing or wrong Input info is an Overturn.
 
-If the user agrees to an overturn:
+User has final say. User settles gap on the spot? Continue normally. Record settlement in Decision Log.
+
+User accepts Overturn:
 
 1. Stop immediately.
-2. Let the user decide whether to save this session's work in the corresponding files.
-3. Write an Overturn Report containing: everything that's missing or contradicted, the evidence, the section, the skill(s) to optionally re-run in order, and the question to settle.
-4. Give the report to the user, and tell them to come back once the gaps have been ammended.
+2. Offer to save session work to file of User's choosing. User accepts? Show complete content. Write only after User confirms.
+3. Show Overturn Report complete content. Write only after User confirms. Per gap, state: what is missing or contradicted, where it belongs in Input, evidence, skill(s) to re-run in order, question each skill must settle.
+4. Delete Draft File and Preview File, if present.
+5. Give User paths of files written. Tell User to come back once gaps amended.
 
 ## Output
 
-The output dossier at the Output File path, structured by the Dossier Structure, written once at the end of `GRILL-DESIGN.md`, after it passes the Dossier Validator and the user confirms it. Formatted strictly in caveman style while adhering to schema constraints.
+Output Dossier at Output File path. Structure: Dossier Structure. Written once, at end of `GRILL-DESIGN.md`, after it passes Dossier Validator and User confirms. Format: caveman style, within schema constraints.
