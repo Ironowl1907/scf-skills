@@ -15,7 +15,7 @@ Compile what later framework steps need about **one task**: shared understanding
 - [Caveman Protocol](references/caveman.md)
 - [Dossier Renderer](scripts/dossier-renderer)
 - [Dossier Validator](scripts/dossier-validator)
-- [Dossier Structure](assets/impl-proposal.json)
+- [Dossier Structure](assets/brief-and-context.json)
 - Draft File: `.ai/tasks/<task_name>/01-brief-and-context.draft.md`
 - Output File: `.ai/tasks/<task_name>/01-brief-and-context.md`
 
@@ -31,7 +31,7 @@ Follow Caveman Protocol strictly in all User interaction, grilling cycles, confi
 
 1. **Resolve Input** per Input section.
 2. **Read and run brief grilling** on resolved story. It proposes `<task_name>`, creates Draft File, fills Task Brief after User confirms.
-3. **Read and run context grilling** on same task. It validates completed Dossier with Validation Script, then writes Context section after User confirms.
+3. **Read and run context grilling** on same task. It validates completed Dossier with Dossier Validator, then writes Context section after User confirms.
 4. **Finish**: give User file path. Say Preparation complete. Next step: Analysis & Design.
 
 Each step blocked until previous step completes.

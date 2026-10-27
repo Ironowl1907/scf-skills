@@ -32,4 +32,4 @@ Then show User Dossier file exactly as it will be written. Ask User to confirm. 
 
 ## Writing the file
 
-User confirms: Generate Draft File with Template Generator Script. Fill Task Brief sections. Append session decisions to Decision Log, starting at Q1. Leave Context section and field labels untouched. Write all other content in User's language.
+User confirms: Generate Draft File with Dossier Renderer. Fill Task Brief sections. Append session decisions to Decision Log, starting at Q1. Leave Context section and field labels untouched. Write all other content in User's language.
