@@ -34,6 +34,6 @@ Session done only when every branch is settled and no open questions remain.
 3. File paths encouraged here.
 4. Write content in the User's language. Keep template section headings and field labels unchanged, so later steps can locate them.
 5. Write the completed Dossier to the Draft File.
-6. Run the Validation Script on it. Warnings or errors raised? Do not proceed. Fix the Dossier structure and rerun until all validation requirements pass.
+6. Run the Dossier Validator on it. Warnings or errors raised? Do not proceed. Fix the Dossier structure and rerun until all validation requirements pass.
 7. Show the User the complete Dossier file as it will be written. Wait for confirmation.
 8. User confirms? Write it to the Output File path. Then delete the Draft File.

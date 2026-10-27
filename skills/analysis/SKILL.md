@@ -16,7 +16,7 @@ Find what fulfilling one task **does to system around it**. Settle with User **w
 - [Impact Lenses](references/impact-lenses.md)
 - [Dossier Renderer](scripts/dossier-renderer)
 - [Dossier Validator](scripts/dossier-validator)
-- [Dossier Structure](assets/impl-proposal.json)
+- [Dossier Structure](assets/analysis.json)
 - Candidates File: `.ai/tasks/<task_name>/02-analysis.candidates.md`
 - Draft File: `.ai/tasks/<task_name>/02-analysis.draft.md`
 - Output File: `.ai/tasks/<task_name>/02-analysis.md`
@@ -35,13 +35,13 @@ Curated info User provides: text and/or files (e.g. `.ai/tasks/<task_name>/01-br
 Strictly follow Caveman Protocol in all User interaction, grilling rounds, confirmations, and Dossier content.
 
 1. **Read Input** as above.
-2. **Generate Draft File** with Template Generator Script.
+2. **Generate Draft File** with Dossier Renderer.
 3. **Read and execute `RED-TEAM.md`.** It produces candidate impacts.
-4. **Read and execute `GRILL-IMPACT.md`.** It settles every candidate with User and validates Dossier with Validation Script. It writes Output File once User confirms.
+4. **Read and execute `GRILL-IMPACT.md`.** It settles every candidate with User and validates Dossier with Dossier Validator. It writes Output File once User confirms.
 5. **Finish**: tell User Output File path, that Analysis is complete, and that next step is Implementation Proposal.
 
-Each step is blocked until the one before it has run to completion.
 Do not declare Analysis complete while overturn is pending.
+Each step blocked until previous step completes.
 
 ## Overturning
 

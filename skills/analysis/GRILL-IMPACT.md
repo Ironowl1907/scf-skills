@@ -61,6 +61,6 @@ Fill in Draft File, generated from Dossier Template:
 - Keep template section headings and field labels unchanged, so later steps can locate them. Write all other content in User's language. File paths encouraged.
 - Never modify Input files.
 
-Run Validation Script on Draft File. Warnings or errors raised? Do not proceed. Iterate on Dossier structure until all validation requirements pass. Then show User complete Dossier as it will be written. Ask User to confirm it. Do not write anything until User confirms.
+Run Dossier Validator on Draft File. Warnings or errors raised? Do not proceed. Iterate on Dossier structure until all validation requirements pass. Then show User complete Dossier as it will be written. Ask User to confirm it. Do not write anything until User confirms.
 
 User confirms: write to Output File path. Then delete Draft File and Candidates File.
