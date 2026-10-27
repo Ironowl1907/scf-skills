@@ -1,204 +1,69 @@
-# SCF skills
+# SCF Agent Skills
 
-## Design choices
-See [CONVENTIONS.md](CONVENTIONS.md)
+## Estado y hoja de ruta
 
+| Paso | Nombre | Skill | Estado |
+|---|---|---|---|
+| 1 | Preparación | `prep` | Disponible |
+| 2 | Análisis y Diseño | `analysis` | Disponible |
+| 3 | Propuesta de implementación | `impl-proposal` | Disponible |
+| 4 | Implementación Agéntica | `impl` | En desarrollo |
+| 5 | Auditoría | `audit` | Planificado |
+| 6 | Tests | `test` | Planificado |
+| 7 | Documentación | `docs` | Planificado |
+| 8 | Integración | `integration` | Planificado |
 
-## Attribution
-*Grilling protocol adapted from Matt Pocock's `grilling` skill (github.com/mattpocock/skills).*
+No hay releases, pero es una buena idea en el futuro, cuando estén disponibles las 8 skills y vayan requiriendo mantenimiento
 
+## Requisitos
 
-## Dossier Templates
+- Un agente compatible con la especificación [Agent Skills](https://agentskills.io/specification). Las skills son agnósticas al agente. Hasta ahora se probaron con Claude.ai y Antigravity.
+- Python 3.8+, standard lib. Lo usan los scripts de renderizado y validación de Dossiers.
+- `bash`/`zsh` y `zip`, para empaquetar las skills.
+- Acceso a ClickUp (opcional). Si el agente tiene una herramienta de ClickUp, `prep` puede leer la tarea directamente desde su ID o URL.
 
-A dossier is a Markdown document with a fixed structure: YAML-style front matter followed by numbered `##` sections. The structure is defined by a **JSON template**, which is the single source of truth for two tools:
+## Instalación y uso
 
-| Tool | What it does |
-|---|---|
-| `dossier-renderer` | Reads a template and prints an empty Markdown skeleton with placeholders and hint comments. |
-| `dossier-validator` | Checks a filled Markdown dossier against the same template and reports errors with line numbers. |
+1. Clonar el repositorio y entrar en él:
 
-Because both tools read the same template, adding a new kind of dossier means writing **one JSON file**. No code changes are needed.
+   ```bash
+   git clone https://gitlab.com/midasconsultores/i-d-i/scf-skills/scf-skills.git
+   cd scf-skills
+   ```
 
-```sh
-dossier-renderer my-template.json > dossier.md     # 1. generate the skeleton
-vim dossier.md                                 # 2. fill it in
-dossier-validator dossier.md my-template.json      # 3. check it (exit 0 = VALID, 1 = INVALID, 2 = usage)
-```
+2. Empaquetar las skills:
 
-Both tools need Python 3.8+ and only the standard library. Both currently **require** the template path as an argument (see [Known quirks](#known-quirks)).
+   ```bash
+   ./package_skills.sh
+   ```
 
----
+3. Copiar los `.zip` generados en `export/` a la carpeta de skills de tu agente.
+4. Las skills se invocan manualmente: `/prep`, `/analysis`, `/impl-proposal`, etc.
 
-### Template anatomy
+## Contribuir
 
-```json
-{
-  "version": "1.0",
-  "metadata": { ... },
-  "sections": [ ... ]
-}
-```
+Antes de crear o modificar una skill, leer [`CONVENTIONS.md`](CONVENTIONS.md). Todas las skills se rigen por ese estándar. Si el estándar cambia, las skills deben ser actualizadas para estar al día.
 
-| Key | Required | Notes |
-|---|---|---|
-| `version` | no | Informational only; neither tool reads it. |
-| `metadata` | yes | Front-matter keys, in output order. Use `{}` if you need none. |
-| `sections` | yes | Ordered list of `##` sections. |
+Las referencias compartidas (`grilling.md`, `impact-lenses.md`, `caveman.md` y los scripts de Dossier) se editan solo en `shared/`. `sync-refs.sh` luego los copia a cada skill.
 
-#### Metadata
+### Flujo de ramas
 
-Each key in `metadata` becomes a front-matter line. **Every metadata key is required**: there is no optional metadata. The value may be a plain string or an object.
+Nos hemos esmerado por mantener un historial semilineal, que preserva siempre el historial de los cambios y su procedencia, sin contar que minimiza la necesidad de resolver merge conflicts.
+- `develop` está protegida y solo cambia mediante *merge requests* aprobados.
+- Las ramas de trabajo se actualizan siempre con *rebase*, nunca con *fast-forward* ni *merge*.
+- De una rama pueden salir más, siempre manteniendo el historial semilineal (ver historial entre f22d4d1 y ac1e0142).
 
-| Spec | Rendered as | Validated as |
-|---|---|---|
-| `"string"` (any string) | `key: <key>` | Non-empty and not a bare `<placeholder>`. |
-| `{ "options": [...], "default": "..." }` | `key: <default>  # one of: a \| b` | Must be exactly one of `options`. Without `default`, the first option is used. |
-| `{ "schema": "..." }` | `key: <key>` | Must match the [schema](#schema-mini-language). |
+### Pruebas
 
-`type` and `prompt` inside a metadata object are documentation only; neither tool reads them (the renderer does not show the metadata `prompt`).
+## Buenas prácticas
 
-When reading front matter, the validator strips surrounding quotes and drops anything after ` #` (space-hash), which is how the `# one of:` hint is ignored.
+- **Evitar ejecuciones iterativas.** Re-ejecutar una skill sobre su propia salida para "pulirla" es una principal causa de alucinaciones y otros problemas. Conviene corregir la entrada y ejecutar de nuevo desde cero.
+- **No incluir información que cambió o va a cambiar.** Se contamina el contexto y el modelo no olvida los datos que le das aunque se lo pidas.
+- **Reunir mucha información antes de recurrir a la IA.** Tener buena información de entrada reduce la cantidad de preguntas en cada sesión de *grilling*. Si no, puede ser bastante cansador.
 
-#### Sections and subsections
+## Créditos
 
-A section is one of two shapes:
-
-```jsonc
-// A section that is itself a block
-{ "title": "5. Decision Log", "format": "bullet_list", ... }
-
-// A section that groups subsections (each subsection is a block)
-{ "title": "1. Task Brief", "subsections": [
-    { "title": "Problem Statement", "format": "string", ... },
-    { "title": "Acceptance Criteria", "format": "ordered_list", ... }
-] }
-```
-
-Section titles become `## <title>` and subsection titles become `### <title>`. The validator matches headings **by exact text**, so any numbering you put in the title (`"1. Scope"`) becomes part of the heading the author must write. Headings must appear in template order.
-
-#### Blocks
-
-A block is anything with a `format`. These keys apply to all blocks:
-
-| Key | Meaning |
-|---|---|
-| `format` | `string`, `ordered_list`, `bullet_list`, or `entries`. |
-| `required` | Defaults to `true`. With `false`, the content may be empty or `None`, but **the heading itself must still be present**. |
-| `prompt` | Text shown as the placeholder: rendered as `<prompt>` in lowercase, with a trailing period removed. Falls back to the block title. |
-| `item_schema` | For lists only. A [schema](#schema-mini-language) each item must match. When present, it is shown instead of `prompt`. |
-
-##### `string`
-
-Free prose. Any list item under the heading is an error. A required block with no prose is an error.
-
-##### `ordered_list` and `bullet_list`
-
-Every top-level line must be a list item: `1.` or `1)` for ordered lists, `-`, `*` or `+` for bullet lists. Prose lines are an error, and using the wrong marker is an error. The numbers in an ordered list are not checked.
-
-Items whose whole text is `None` or `N/A` (case-insensitive, optionally wrapped in `_` / `*`, trailing period allowed) are ignored. A required list that only contains such items fails. To mark an optional list as empty, write the item **as a list item** (`- None` or `1. N/A`), not as a bare line.
-
-Indented lines are ignored entirely, so authors can add nested sub-bullets or continuation lines without breaking validation. The schema only applies to top-level items.
-
-##### `entries`
-
-A repeatable group of `###` headings, each carrying a fixed set of `- **Field**: value` lines. Use it for numbered records such as impacts, obligations, or test cases.
-
-| Key | Meaning |
-|---|---|
-| `heading_schema` | [Schema](#schema-mini-language) every entry heading must match, e.g. `"I<n> — <title>"`. |
-| `fields` | Ordered list of field specs (below). |
-| `required` | With `true` (the default), at least one entry must exist. |
-
-Each field spec:
-
-| Key | Meaning |
-|---|---|
-| `name` | Field label, written as `- **<name>**: value`. |
-| `prompt` | Placeholder text if there is no `options`/`schema`. Unlike block prompts, it is **not** lowercased. |
-| `options` | Value must equal one of these exactly (case-sensitive). |
-| `schema` | A schema string, or a **list** of alternative schemas. The value must match at least one. |
-
-Every field is required in every entry; there is no per-field `required`. Field values must be on a single line. Extra, unknown fields are ignored. If a field has both `options` and `schema`, only `options` is checked.
-
-> **`entries` is only valid as a section-level format**, never inside `subsections`. Entries are `###` headings, and subsections are `###` headings too, so the two would collide. Every `###` under an entries section is treated as an entry.
-
----
-
-### Schema mini-language
-
-`item_schema`, `heading_schema`, field `schema` and metadata `schema` all use the same syntax. A schema is literal text mixed with `<...>` tokens. The entire value must match: it is anchored at both ends.
-
-| Token | Matches | Example |
-|---|---|---|
-| `<n>` | One or more digits | `Q<n>` matches `Q12` |
-| `<a \| b \| c>` | Exactly one of the listed alternatives (separator is space-pipe-space) | `<origin \| upstream \| downstream>` |
-| `<anything else>` | Any non-empty text | `<rationale>` |
-| Literal text | Itself, verbatim (including backticks, `**`, parentheses) | `(Settled in: Q<n>)` |
-
-The em dash `—` in a schema also accepts an en dash `–` or a hyphen `-`, so `T<n> — <title>` accepts `T2 – Title` and `T2 - Title`.
-
-The text inside a free-text token is only a hint for the author. `<impact ids, e.g. I1, I2>` accepts any non-empty text; the format of the ids is not enforced. If you need structure, put it in the literal part of the schema.
-
-Tokens cannot nest, and a `<` or `>` inside a token is not supported.
-
-### How "unfilled" is detected
-
-The renderer writes placeholders such as `<what is being tested and why>`. The validator treats a value as unfilled when it still contains a `<...>` whose text (case-insensitive) is one of the placeholder names from that block's `item_schema`/`prompt`, or from that field's example. In practice, this has three consequences:
-
-1. Keep `prompt` text free of `<`, `>` and line breaks, because the whole prompt becomes a placeholder name.
-2. Placeholders left in an **optional** block are still errors. The author must fill the block or replace the placeholder with `None`.
-3. Real content that happens to contain angle brackets (`List<T>`, `<div>`) is fine as long as the text inside does not match a placeholder name. However, see the schema quirk under [Known quirks](#known-quirks).
-
-HTML comments (`<!-- ... -->`), including the renderer's hints, are stripped before validation and can be left in place.
-
----
-
-## Creating a new template: walkthrough
-
-This example builds a test plan template that uses every feature.
-
-### 1. Sketch the target document
-
-Write by hand the Markdown you want authors to produce. Decide which parts are prose, which are lists, and which are repeatable records with fixed fields. Decide which parts may be empty.
-
-### 2. Write the template
-
-`test-plan.json`:
-
-```json
-{
-  "version": "1.0",
-  "metadata": {
-    "task_name": "string",
-    "ticket": { "type": "string", "schema": "<PROJ | OPS>-<n>" },
-    "status": { "type": "enum", "options": ["Draft", "Reviewed", "Approved"], "default": "Draft" }
-  },
-  "sections": [
-    {
-      "title": "1. Scope",
-      "subsections": [
-        { "title": "Summary", "format": "string", "prompt": "What is being tested and why." },
-        { "title": "Components", "format": "bullet_list", "item_schema": "`<path or module>` — <what changes>" },
-        { "title": "Not Tested", "format": "bullet_list", "prompt": "Item", "required": false }
-      ]
-    },
-    {
-      "title": "2. Test Cases",
-      "format": "entries",
-      "heading_schema": "T<n> — <title>",
-      "fields": [
-        { "name": "Level", "options": ["Unit", "Integration", "E2E"] },
-        { "name": "Steps", "prompt": "Short description of the steps" },
-        { "name": "Expected", "prompt": "Observable result" },
-        { "name": "Covers", "schema": "<acceptance criteria ids, e.g. AC1, AC2>" }
-      ]
-    },
-    {
-      "title": "3. Run Order",
-      "format": "ordered_list",
-      "item_schema": "T<n> — <reason>",
-      "required": false
-    }
-  ]
-}
-```
+- **Matías Campoy**: diseño del Systemic Context Framework.
+- **Cristóbal González** y **Facundo Guiñazú**: desarrollo de todo lo realizado hasta la fecha.
+- **JuliusBrussee**: skill *caveman*, adaptada e incluida en este repositorio.
+- **Matt Pocock**: skill de *grilling*, adaptada e incluida en este repositorio.
