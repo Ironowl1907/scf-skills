@@ -13,7 +13,12 @@
 | 7 | Documentación | `docs` | Planificado |
 | 8 | Integración | `integration` | Planificado |
 
-No hay releases, pero es una buena idea en el futuro, cuando estén disponibles las 8 skills y vayan requiriendo mantenimiento
+### Siguientes pasos:
+- [ ] Completar `impl`
+- [ ] Terminar las skills restantes
+- [ ] Generalizarlas para un uso interdisciplinario
+- [ ] Crear y publicar releases
+- [ ] Crear y publicar lineamientos de uso más detallados
 
 ## Requisitos
 
