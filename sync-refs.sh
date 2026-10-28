@@ -35,6 +35,7 @@ for dest in \
     ./skills/prep/references/ \
     ./skills/analysis/references/ \
     ./skills/impl-proposal/references/ \
+    ./skills/impl/references/ \
     ; do
 cp -v ./shared/caveman.md $dest;
 done
