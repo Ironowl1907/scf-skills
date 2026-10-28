@@ -34,18 +34,7 @@
       ]
     },
     {
-      "title": "4. Ignored Gaps",
-      "format": "entries",
-      "heading_schema": "G<n> — <title>",
-      "required": false,
-      "fields": [
-        { "name": "Gap", "prompt": "Missing contract, ambiguous instruction, contradiction, or failed check" },
-        { "name": "Risk", "prompt": "Explicit consequence of ignoring gap" },
-        { "name": "Skipped", "prompt": "Steps, checks, or files left untouched, or \"None\" (Settled in: Q<n>)" }
-      ]
-    },
-    {
-      "title": "5. Decision Log",
+      "title": "4. Decision Log",
       "format": "bullet_list",
       "required": false,
       "item_schema": "**Q<n>** — <question title>: <decision>"
