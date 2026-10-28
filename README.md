@@ -7,14 +7,14 @@
 | 1 | Preparación | `prep` | Disponible |
 | 2 | Análisis y Diseño | `analysis` | Disponible |
 | 3 | Propuesta de implementación | `impl-proposal` | Disponible |
-| 4 | Implementación Agéntica | `impl` | En desarrollo |
+| 4 | Implementación Agéntica | `impl` | Disponible |
 | 5 | Auditoría | `audit` | Planificado |
 | 6 | Tests | `test` | Planificado |
 | 7 | Documentación | `docs` | Planificado |
 | 8 | Integración | `integration` | Planificado |
 
 ### Siguientes pasos:
-- [ ] Completar `impl`
+- [x] Completar `impl`
 - [ ] Terminar las skills restantes
 - [ ] Generalizarlas para un uso interdisciplinario
 - [ ] Crear y publicar releases
