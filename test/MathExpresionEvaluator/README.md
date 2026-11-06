@@ -1,3 +1,10 @@
-# Testing
+# Math Expression Evaluator
 
-Using [this](https://github.com/Ironowl1907/MathExpressionEvaluator) repo to add variable support
+Testing with personal project
+[This repo](https://github.com/Ironowl1907/MathExpressionEvaluator)
+On branch `agents`.
+
+- [x] prep
+- [x] analysis
+- [x] impl-proposal
+- [x] impl

@@ -1,0 +1,43 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "task_name": "string"
+  },
+  "sections": [
+    {
+      "title": "1. Implementation Summary",
+      "format": "string",
+      "prompt": "2–5 sentences: what changed, files touched, and check results."
+    },
+    {
+      "title": "2. Executed Steps",
+      "format": "entries",
+      "heading_schema": "S<n> — <title>",
+      "fields": [
+        { "name": "Action", "options": ["Create", "Modify", "Delete", "Run"] },
+        { "name": "Touches", "prompt": "Exact file paths and symbols changed, or \"None\"" },
+        { "name": "Status", "options": ["Done", "Skipped"] },
+        { "name": "Outcome", "prompt": "Change applied, command output, or skip reason" },
+        { "name": "Checks", "prompt": "Check ids run for step, e.g. V1, V2, or \"None\"" }
+      ]
+    },
+    {
+      "title": "3. Check Results",
+      "format": "entries",
+      "heading_schema": "V<n> — <title>",
+      "required": false,
+      "fields": [
+        { "name": "Method", "prompt": "Exact command or action run" },
+        { "name": "Result", "prompt": "Observed output or behavior" },
+        { "name": "Status", "options": ["Pass", "Fail", "Skipped"] },
+        { "name": "Verifies", "prompt": "Target or step ids verified, e.g. T1, S1, or \"None\"" }
+      ]
+    },
+    {
+      "title": "4. Decision Log",
+      "format": "bullet_list",
+      "required": false,
+      "item_schema": "**Q<n>** — <question title>: <decision>"
+    }
+  ]
+}
